@@ -1,5 +1,7 @@
 # Make anything draggable. And editable. ![version](https://img.shields.io/github/release/hchiam/draggable?style=flat-square) [![HitCount](http://hits.dwyl.com/hchiam/draggable.svg)](http://hits.dwyl.com/hchiam/draggable)
 
+[Live demo](https://codepen.io/hchiam/pen/pobxgBo)
+
 ```js
 https://cdn.jsdelivr.net/gh/hchiam/draggable@master/makeElementDraggable.js
 https://cdn.jsdelivr.net/gh/hchiam/draggable@master/makeElementDraggableAndEditable.js
@@ -9,8 +11,6 @@ https://cdn.jsdelivr.net/gh/hchiam/draggable@master/makeElementDraggableAndEdita
 https://cdn.jsdelivr.net/gh/hchiam/draggable@1.0.0/makeElementDraggable.js
 https://cdn.jsdelivr.net/gh/hchiam/draggable@1.0.0/makeElementDraggableAndEditable.js
 ```
-
-[Live demo](https://codepen.io/hchiam/pen/pobxgBo)
 
 Example usage:
 
