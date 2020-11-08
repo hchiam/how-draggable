@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+    <style>
+      body {
+        background: #333;
+        filter: invert(1);
+        font-family: avenir, arial, tahoma;
+      }
+
+      #target {
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="target" draggable="true" clickable="true">
+      Drag Me, or Double-Click Me For Editing!
+    </p>
+    <script src="makeElementDraggableAndEditable.js"></script>
+    <script>
+      var element = document.getElementById("target");
+      makeElementDraggableAndEditable(target);
+    </script>
+  </body>
+</html>
