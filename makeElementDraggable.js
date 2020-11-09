@@ -16,7 +16,7 @@ function makeElementDraggable(element, settings) {
     document.addEventListener("mouseup", stopDragging);
     document.addEventListener("mousemove", dragElement);
     if (settings && settings.mouseDownCallback) {
-      settings.mouseDownCallback();
+      settings.mouseDownCallback(element);
     }
   }
 
@@ -31,7 +31,7 @@ function makeElementDraggable(element, settings) {
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
     if (settings && settings.mouseMoveCallback) {
-      settings.mouseMoveCallback();
+      settings.mouseMoveCallback(element);
     }
   }
 
@@ -39,7 +39,7 @@ function makeElementDraggable(element, settings) {
     document.removeEventListener("mouseup", stopDragging);
     document.removeEventListener("mousemove", dragElement);
     if (settings && settings.mouseUpCallback) {
-      settings.mouseUpCallback();
+      settings.mouseUpCallback(element);
     }
   }
 }

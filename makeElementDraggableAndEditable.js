@@ -22,7 +22,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.contentEditable = false;
     detectAsClickToEdit = true;
     if (settings && settings.mouseDownCallback) {
-      settings.mouseDownCallback();
+      settings.mouseDownCallback(element);
     }
   }
 
@@ -38,7 +38,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.style.top = element.offsetTop + yChange + "px";
     detectAsClickToEdit = false;
     if (settings && settings.mouseMoveCallback) {
-      settings.mouseMoveCallback();
+      settings.mouseMoveCallback(element);
     }
   }
 
@@ -51,7 +51,7 @@ function makeElementDraggableAndEditable(element, settings) {
       element.removeEventListener("mousedown", dragOnMouseDown);
     }
     if (settings && settings.mouseUpCallback) {
-      settings.mouseUpCallback();
+      settings.mouseUpCallback(element);
     }
   }
 
@@ -59,7 +59,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.contentEditable = false;
     element.addEventListener("mousedown", dragOnMouseDown);
     if (settings && settings.blurCallback) {
-      settings.blurCallback();
+      settings.blurCallback(element);
     }
   }
 }
