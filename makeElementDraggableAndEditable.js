@@ -3,7 +3,7 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   var detectAsClickToEdit = false;
-  element.addEventListener("mousedown", dragOnMouseDown);
+  element.addEventListener("mousedown", setupOnMouseDown);
   element.addEventListener("blur", resetEditableOnBlur);
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
     element.style.marginBlockStart = "initial";
@@ -12,21 +12,21 @@ function makeElementDraggableAndEditable(element, settings) {
     element.style.minHeight = "1em";
   }
 
-  function dragOnMouseDown(event) {
+  function setupOnMouseDown(event) {
     var e = event || window.event;
     e.preventDefault();
     mouseX = e.clientX;
     mouseY = e.clientY;
-    document.addEventListener("mouseup", stopDragging);
-    document.addEventListener("mousemove", dragElement);
+    document.addEventListener("mouseup", stopDraggingOnMouseUp);
+    document.addEventListener("mousemove", dragOnMouseMove);
     element.contentEditable = false;
-    detectAsClickToEdit = true;
+    detectAsClickToEdit = true; // enable editing when only clicking
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
     }
   }
 
-  function dragElement(event) {
+  function dragOnMouseMove(event) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
@@ -36,19 +36,19 @@ function makeElementDraggableAndEditable(element, settings) {
     mouseY = e.clientY;
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
-    detectAsClickToEdit = false;
+    detectAsClickToEdit = false; // disabling editing when dragging
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
     }
   }
 
-  function stopDragging() {
-    document.removeEventListener("mouseup", stopDragging);
-    document.removeEventListener("mousemove", dragElement);
+  function stopDraggingOnMouseUp() {
+    document.removeEventListener("mouseup", stopDraggingOnMouseUp);
+    document.removeEventListener("mousemove", dragOnMouseMove);
     if (detectAsClickToEdit) {
-      element.contentEditable = true;
+      element.contentEditable = true; // disabling editing when stopped dragging
       element.focus();
-      element.removeEventListener("mousedown", dragOnMouseDown);
+      element.removeEventListener("mousedown", setupOnMouseDown);
     }
     if (settings && settings.mouseUpCallback) {
       settings.mouseUpCallback(element);
@@ -57,7 +57,7 @@ function makeElementDraggableAndEditable(element, settings) {
 
   function resetEditableOnBlur() {
     element.contentEditable = false;
-    element.addEventListener("mousedown", dragOnMouseDown);
+    element.addEventListener("mousedown", setupOnMouseDown);
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);
     }

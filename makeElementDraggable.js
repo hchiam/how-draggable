@@ -2,25 +2,25 @@ function makeElementDraggable(element, settings) {
   var mouseX = 0;
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
-  element.addEventListener("mousedown", dragOnMouseDown);
+  element.addEventListener("mousedown", setupOnMouseDown);
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
     element.style.marginBlockStart = "initial";
     element.style.position = "absolute";
   }
 
-  function dragOnMouseDown(event) {
+  function setupOnMouseDown(event) {
     var e = event || window.event;
     e.preventDefault();
     mouseX = e.clientX;
     mouseY = e.clientY;
-    document.addEventListener("mouseup", stopDragging);
-    document.addEventListener("mousemove", dragElement);
+    document.addEventListener("mouseup", stopDraggingOnMouseUp);
+    document.addEventListener("mousemove", dragOnMouseMove);
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
     }
   }
 
-  function dragElement(event) {
+  function dragOnMouseMove(event) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
@@ -35,9 +35,9 @@ function makeElementDraggable(element, settings) {
     }
   }
 
-  function stopDragging() {
-    document.removeEventListener("mouseup", stopDragging);
-    document.removeEventListener("mousemove", dragElement);
+  function stopDraggingOnMouseUp() {
+    document.removeEventListener("mouseup", stopDraggingOnMouseUp);
+    document.removeEventListener("mousemove", dragOnMouseMove);
     if (settings && settings.mouseUpCallback) {
       settings.mouseUpCallback(element);
     }
