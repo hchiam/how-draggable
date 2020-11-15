@@ -20,11 +20,14 @@ var settings = {
   // NOTE: settings are all optional:
   disableStyleReset: false, // false by default
   mouseDownCallback: function () {}, // optional
+  touchStartCallback: function () {}, // optional
   mouseMoveCallback: function () {}, // optional
+  touchMoveCallback: function () {}, // optional
   mouseUpCallback: function () {
     // optional
     alert("mouseup");
   },
+  touchEndCallback: function () {}, // optional
   blurCallback: function () {}, // optional
 };
 // now to actually use it:
