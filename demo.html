@@ -23,7 +23,13 @@
     <script src="makeElementDraggableAndEditable.js"></script>
     <script>
       var element = document.getElementById("target");
-      makeElementDraggableAndEditable(target);
+      var someSettings = {
+        mouseMoveCallback: (element) =>
+          console.log("mousemove", element.style.left, element.style.top),
+        touchMoveCallback: (element) =>
+          console.log("touchmove", element.style.left, element.style.top),
+      };
+      makeElementDraggableAndEditable(target, someSettings);
     </script>
   </body>
 </html>

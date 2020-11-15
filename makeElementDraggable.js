@@ -3,6 +3,7 @@ function makeElementDraggable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   element.addEventListener("mousedown", setupOnMouseDown);
+  element.addEventListener("touchstart", setupOnTouchStart);
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
     element.style.marginBlockStart = "initial";
     element.style.position = "absolute";
@@ -11,12 +12,23 @@ function makeElementDraggable(element, settings) {
   function setupOnMouseDown(event) {
     var e = event || window.event;
     e.preventDefault();
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+    mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp);
     document.addEventListener("mousemove", dragOnMouseMove);
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
+    }
+  }
+  function setupOnTouchStart(event) {
+    var e = event || window.event;
+    e.preventDefault();
+    mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+    mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+    document.addEventListener("touchend", stopDraggingOnTouchEnd);
+    document.addEventListener("touchmove", dragOnTouchMove);
+    if (settings && settings.touchStartCallback) {
+      settings.touchStartCallback(element);
     }
   }
 
@@ -24,14 +36,37 @@ function makeElementDraggable(element, settings) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
-    const xChange = e.clientX - mouseX;
-    const yChange = e.clientY - mouseY;
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    const xChange =
+      e.clientX - mouseX ||
+      (e.touches && e.touches.length && e.touches[0].pageX - mouseX);
+    const yChange =
+      e.clientY - mouseY ||
+      (e.touches && e.touches.length && e.touches[0].pageY - mouseY);
+    mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+    mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
+    }
+  }
+
+  function dragOnTouchMove(event) {
+    element.focus();
+    var e = event || window.event;
+    e.preventDefault();
+    const xChange =
+      e.clientX - mouseX ||
+      (e.touches && e.touches.length && e.touches[0].pageX - mouseX);
+    const yChange =
+      e.clientY - mouseY ||
+      (e.touches && e.touches.length && e.touches[0].pageY - mouseY);
+    mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+    mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+    element.style.left = element.offsetLeft + xChange + "px";
+    element.style.top = element.offsetTop + yChange + "px";
+    if (settings && settings.touchMoveCallback) {
+      settings.touchMoveCallback(element);
     }
   }
 
@@ -40,6 +75,14 @@ function makeElementDraggable(element, settings) {
     document.removeEventListener("mousemove", dragOnMouseMove);
     if (settings && settings.mouseUpCallback) {
       settings.mouseUpCallback(element);
+    }
+  }
+
+  function stopDraggingOnTouchEnd() {
+    document.removeEventListener("touchend", stopDraggingOnTouchEnd);
+    document.removeEventListener("touchmove", dragOnTouchMove);
+    if (settings && settings.touchEndCallback) {
+      settings.touchEndCallback(element);
     }
   }
 }
