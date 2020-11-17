@@ -2,7 +2,7 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseX = 0;
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
-  var detectAsClickToEdit = false;
+  element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown);
   element.addEventListener("touchstart", setupOnTouchStart);
   element.addEventListener("blur", resetEditableOnBlur);
@@ -20,8 +20,6 @@ function makeElementDraggableAndEditable(element, settings) {
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp);
     document.addEventListener("mousemove", dragOnMouseMove);
-    element.contentEditable = false;
-    detectAsClickToEdit = true; // enable editing when only clicking
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
     }
@@ -33,8 +31,6 @@ function makeElementDraggableAndEditable(element, settings) {
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd);
     document.addEventListener("touchmove", dragOnTouchMove);
-    element.contentEditable = false;
-    detectAsClickToEdit = true; // enable editing when only clicking
     if (settings && settings.touchStartCallback) {
       settings.touchStartCallback(element);
     }
@@ -54,7 +50,6 @@ function makeElementDraggableAndEditable(element, settings) {
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
-    detectAsClickToEdit = false; // disabling editing when dragging
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
     }
@@ -74,7 +69,6 @@ function makeElementDraggableAndEditable(element, settings) {
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
-    detectAsClickToEdit = false; // disabling editing when dragging
     if (settings && settings.touchMoveCallback) {
       settings.touchMoveCallback(element);
     }
@@ -83,11 +77,7 @@ function makeElementDraggableAndEditable(element, settings) {
   function stopDraggingOnMouseUp() {
     document.removeEventListener("mouseup", stopDraggingOnMouseUp);
     document.removeEventListener("mousemove", dragOnMouseMove);
-    if (detectAsClickToEdit) {
-      element.contentEditable = true; // disabling editing when stopped dragging
-      element.focus();
-      element.removeEventListener("mousedown", setupOnMouseDown);
-    }
+    element.removeEventListener("mousedown", setupOnMouseDown);
     if (settings && settings.mouseUpCallback) {
       settings.mouseUpCallback(element);
     }
@@ -96,18 +86,13 @@ function makeElementDraggableAndEditable(element, settings) {
   function stopDraggingOnTouchEnd() {
     document.removeEventListener("touchend", stopDraggingOnTouchEnd);
     document.removeEventListener("touchmove", dragOnTouchMove);
-    if (detectAsClickToEdit) {
-      element.contentEditable = true; // disabling editing when stopped dragging
-      element.focus();
-      element.removeEventListener("touchstart", setupOnTouchStart);
-    }
+    element.removeEventListener("touchstart", setupOnTouchStart);
     if (settings && settings.touchEndCallback) {
       settings.touchEndCallback(element);
     }
   }
 
   function resetEditableOnBlur() {
-    element.contentEditable = false;
     element.addEventListener("mousedown", setupOnMouseDown);
     element.addEventListener("touchstart", setupOnTouchStart);
     if (settings && settings.blurCallback) {
