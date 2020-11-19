@@ -2,8 +2,8 @@ function makeElementDraggable(element, settings) {
   var mouseX = 0;
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
-  element.addEventListener("mousedown", setupOnMouseDown, { passive: true });
-  element.addEventListener("touchstart", setupOnTouchStart);
+  element.addEventListener("mousedown", setupOnMouseDown);
+  element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
     element.style.marginBlockStart = "initial";
     element.style.position = "absolute";
@@ -11,7 +11,7 @@ function makeElementDraggable(element, settings) {
 
   function setupOnMouseDown(event) {
     var e = event || window.event;
-    // e.preventDefault();
+    e.preventDefault();
     mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp);
@@ -22,7 +22,7 @@ function makeElementDraggable(element, settings) {
   }
   function setupOnTouchStart(event) {
     var e = event || window.event;
-    e.preventDefault();
+    // e.preventDefault();
     mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd);

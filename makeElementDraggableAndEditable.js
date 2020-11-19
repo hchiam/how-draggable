@@ -3,8 +3,8 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   element.contentEditable = true;
-  element.addEventListener("mousedown", setupOnMouseDown, { passive: true });
-  element.addEventListener("touchstart", setupOnTouchStart);
+  element.addEventListener("mousedown", setupOnMouseDown);
+  element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   element.addEventListener("blur", resetEditableOnBlur);
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
     element.style.marginBlockStart = "initial";
@@ -15,7 +15,7 @@ function makeElementDraggableAndEditable(element, settings) {
 
   function setupOnMouseDown(event) {
     var e = event || window.event;
-    // e.preventDefault();
+    e.preventDefault();
     mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp);
@@ -26,7 +26,7 @@ function makeElementDraggableAndEditable(element, settings) {
   }
   function setupOnTouchStart(event) {
     var e = event || window.event;
-    e.preventDefault();
+    // e.preventDefault();
     mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd);
@@ -94,7 +94,9 @@ function makeElementDraggableAndEditable(element, settings) {
 
   function resetEditableOnBlur() {
     element.addEventListener("mousedown", setupOnMouseDown);
-    element.addEventListener("touchstart", setupOnTouchStart);
+    element.addEventListener("touchstart", setupOnTouchStart, {
+      passive: true,
+    });
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);
     }
