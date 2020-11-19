@@ -39,16 +39,16 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.1/makeElementDraggable.js"
-  integrity="sha384-QFZcWz+BG0noqgaMtRoENHGcvAuHxBjOVb94P5MObRTanycYsxVtC1jqb8M9SKpL"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.2/makeElementDraggable.js"
+  integrity="sha384-1xST3gkhg330MHr9kSN7IGQvTaDjjFx9NqTdJ3UceSjmwBlpiI15veXscbC0QGuS"
   crossorigin="anonymous"
 ></script>
 ```
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.1/makeElementDraggableAndEditable.js"
-  integrity="sha384-0xQVeF+eF53GMXcv4NDFGSQm9tlu/CBFhlHTxj0zuymfq+YbxupbUflHWWi8x0q3"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.2/makeElementDraggableAndEditable.js"
+  integrity="sha384-48QSXS+/4chd4CwJpGh6bI+Ua2s2YTu+HtoFNm+0v6Nn+rCyEVMA7XJZWzyUAWCv"
   crossorigin="anonymous"
 ></script>
 ```
