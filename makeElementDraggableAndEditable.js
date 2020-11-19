@@ -3,7 +3,7 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   element.contentEditable = true;
-  element.addEventListener("mousedown", setupOnMouseDown);
+  element.addEventListener("mousedown", setupOnMouseDown, { passive: true });
   element.addEventListener("touchstart", setupOnTouchStart);
   element.addEventListener("blur", resetEditableOnBlur);
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {

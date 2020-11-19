@@ -2,7 +2,7 @@ function makeElementDraggable(element, settings) {
   var mouseX = 0;
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
-  element.addEventListener("mousedown", setupOnMouseDown);
+  element.addEventListener("mousedown", setupOnMouseDown, { passive: true });
   element.addEventListener("touchstart", setupOnTouchStart);
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
     element.style.marginBlockStart = "initial";
