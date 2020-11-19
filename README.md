@@ -1,4 +1,4 @@
-# Make anything draggable. And editable. ![version](https://img.shields.io/github/release/hchiam/draggable?style=flat-square) [![HitCount](http://hits.dwyl.com/hchiam/draggable.svg)](http://hits.dwyl.com/hchiam/draggable)
+# Make anything draggable. And editable. ![version](https://img.shields.io/github/release/hchiam/draggable?style=flat-square)
 
 [Live demo](https://codepen.io/hchiam/pen/pobxgBo)
 
