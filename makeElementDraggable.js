@@ -11,7 +11,7 @@ function makeElementDraggable(element, settings) {
 
   function setupOnMouseDown(event) {
     var e = event || window.event;
-    e.preventDefault();
+    // e.preventDefault();
     mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp);
