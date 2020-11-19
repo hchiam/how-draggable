@@ -3,13 +3,13 @@
 [Live demo](https://codepen.io/hchiam/pen/pobxgBo)
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@master/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@master/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditable.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.0/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.0/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.2/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@2.2.2/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
