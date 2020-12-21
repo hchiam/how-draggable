@@ -8,8 +8,8 @@ https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditabl
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.0.0/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.0.0/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -39,26 +39,21 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.0.0/makeElementDraggable.js"
-  integrity="sha384-QMYHwpvHc+xLaSjcXWMNVHfXgcYk3Q0zXa8BiMdP5Fx8c7HNGS3aJrQSu63/+P0a"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggable.js"
+  integrity="sha384-HEvXA8ROpDajvXCA2Bp8arOr8CZWLQ7UoffoOwPNF9dRcIQGDY17yWmGBRLx5tNZ"
   crossorigin="anonymous"
 ></script>
 ```
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.0.0/makeElementDraggableAndEditable.js"
-  integrity="sha384-32xYDmwCsT5TKRH10cHvjzyZmOk08xBgVk5wsWCeOsEtW0Hn3iIYJEJRBozEst0P"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggableAndEditable.js"
+  integrity="sha384-9QUf72ouDKSNdfrlhALjl76VLYcGwV2Kv1DhWuTHiAdfawL+dNoASnaLwlk35Ci1"
   crossorigin="anonymous"
 ></script>
 ```
 
 ```bash
-# get the thing to put into integrity="...":
-source get-integrity.sh; sha makeElementDraggable.js;
-```
-
-```bash
-# get the thing to put into integrity="...":
-source get-integrity.sh; sha makeElementDraggableAndEditable.js;
+# get the things to put into integrity="...":
+bash get-integrity.sh;
 ```

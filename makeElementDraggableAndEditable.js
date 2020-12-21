@@ -81,6 +81,7 @@ function makeElementDraggableAndEditable(element, settings) {
       element.focus();
       element.removeEventListener("mousedown", setupOnMouseDown);
     }
+    snap(element);
     if (settings && settings.mouseUpCallback) {
       settings.mouseUpCallback(element);
     }
@@ -94,6 +95,7 @@ function makeElementDraggableAndEditable(element, settings) {
       element.focus();
       element.removeEventListener("touchstart", setupOnTouchStart);
     }
+    snap(element);
     if (settings && settings.touchEndCallback) {
       settings.touchEndCallback(element);
     }
@@ -108,5 +110,51 @@ function makeElementDraggableAndEditable(element, settings) {
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);
     }
+  }
+
+  var snapTimer;
+  function snap(element) {
+    var left = element.offsetLeft;
+    var top = element.offsetTop;
+    var width = element.offsetWidth;
+    var height = element.offsetHeight;
+    var middleLeft = left + width / 2;
+    var middleTop = top + height / 2;
+
+    if (settings && settings.snapGridSize) {
+      var threshold = settings.snapGridSize;
+      var newLeft = snapToGrid(middleLeft, threshold) - width / 2;
+      var newTop = snapToGrid(middleTop, threshold) - height / 2;
+      element.style.left = newLeft + "px";
+      element.style.top = newTop + "px";
+    }
+
+    if (snapPoints && snapPoints.length) {
+      var threshold = 50;
+      clearTimeout(snapTimer);
+      snapPoints.some(function (snapPoint) {
+        if (isSnapPointInRange(snapPoint, middleLeft, middleTop, threshold)) {
+          var newLeft = snapPoint.x - width / 2;
+          var newTop = snapPoint.y - height / 2;
+          element.style.left = newLeft + "px";
+          element.style.top = newTop + "px";
+          snapTimer = setTimeout(function () {
+            return true; // exit Array.some()
+          }, 100);
+        }
+      });
+    }
+  }
+
+  function snapToGrid(value, gridSize = 25) {
+    var newValue = gridSize * Math.floor(value / gridSize);
+    return newValue;
+  }
+
+  function isSnapPointInRange(snapPoint, left, top, threshold = 50) {
+    var a = snapPoint.x - left;
+    var b = snapPoint.y - top;
+    var c = Math.sqrt(a * a + b * b);
+    return c <= threshold;
   }
 }
