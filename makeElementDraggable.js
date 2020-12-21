@@ -33,25 +33,20 @@ function makeElementDraggable(element, settings) {
   }
 
   function dragOnMouseMove(event) {
-    element.focus();
-    var e = event || window.event;
-    e.preventDefault();
-    const xChange =
-      e.clientX - mouseX ||
-      (e.touches && e.touches.length && e.touches[0].pageX - mouseX);
-    const yChange =
-      e.clientY - mouseY ||
-      (e.touches && e.touches.length && e.touches[0].pageY - mouseY);
-    mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
-    element.style.left = element.offsetLeft + xChange + "px";
-    element.style.top = element.offsetTop + yChange + "px";
+    drag(event);
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
     }
   }
 
   function dragOnTouchMove(event) {
+    drag(event);
+    if (settings && settings.touchMoveCallback) {
+      settings.touchMoveCallback(element);
+    }
+  }
+
+  function drag(event) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
@@ -65,9 +60,6 @@ function makeElementDraggable(element, settings) {
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
-    if (settings && settings.touchMoveCallback) {
-      settings.touchMoveCallback(element);
-    }
   }
 
   function stopDraggingOnMouseUp() {

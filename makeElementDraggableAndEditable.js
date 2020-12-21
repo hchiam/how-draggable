@@ -2,6 +2,7 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseX = 0;
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
+  var snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
   var detectAsClickToEdit = false;
   // element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown);
@@ -42,19 +43,7 @@ function makeElementDraggableAndEditable(element, settings) {
   }
 
   function dragOnMouseMove(event) {
-    element.focus();
-    var e = event || window.event;
-    e.preventDefault();
-    const xChange =
-      e.clientX - mouseX ||
-      (e.touches && e.touches.length && e.touches[0].pageX - mouseX);
-    const yChange =
-      e.clientY - mouseY ||
-      (e.touches && e.touches.length && e.touches[0].pageY - mouseY);
-    mouseX = e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
-    element.style.left = element.offsetLeft + xChange + "px";
-    element.style.top = element.offsetTop + yChange + "px";
+    drag(event);
     detectAsClickToEdit = false; // disabling editing when dragging
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
@@ -62,6 +51,13 @@ function makeElementDraggableAndEditable(element, settings) {
   }
 
   function dragOnTouchMove(event) {
+    drag(event);
+    if (settings && settings.touchMoveCallback) {
+      settings.touchMoveCallback(element);
+    }
+  }
+
+  function drag(event) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
@@ -75,9 +71,6 @@ function makeElementDraggableAndEditable(element, settings) {
     mouseY = e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
-    if (settings && settings.touchMoveCallback) {
-      settings.touchMoveCallback(element);
-    }
   }
 
   function stopDraggingOnMouseUp() {
