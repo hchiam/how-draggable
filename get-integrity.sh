@@ -8,8 +8,12 @@ function sha() {
 
 echo
 echo makeElementDraggable.js
+echo
 sha makeElementDraggable.js
 echo
+echo
+echo
 echo makeElementDraggableAndEditable.js
+echo
 sha makeElementDraggableAndEditable.js
 echo
