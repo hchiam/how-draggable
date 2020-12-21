@@ -29,6 +29,14 @@ var settings = {
   },
   touchEndCallback: function () {}, // optional
   blurCallback: function () {}, // optional
+  // optional:
+  snapPoints: [
+    {
+      x: 200,
+      y: 200,
+    },
+  ],
+  snapGridSize: 25, // optional
 };
 // now to actually use it:
 makeElementDraggableAndEditable(element, settings);
