@@ -3,7 +3,7 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   var snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
-  var disableEditing = settings && settings.disableEditing;
+  var disableEditing = (settings && settings.disableEditing) || false;
   var detectAsClickToEdit = false;
   // element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown);

@@ -3,7 +3,6 @@ function makeElementDraggable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   var snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
-  var detectAsClickToEdit = false;
   element.addEventListener("mousedown", setupOnMouseDown);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   if (!disableStyleReset || typeof disableStyleReset !== "boolean") {
