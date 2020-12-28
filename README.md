@@ -8,8 +8,8 @@ https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditabl
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.3.0/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.3.0/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -19,6 +19,7 @@ var element = document.getElementById("#some-selector");
 var settings = {
   // NOTE: settings are all optional:
   disableStyleReset: false, // false by default
+  disableEditing: false, // false by default
   mouseDownCallback: function () {}, // optional
   touchStartCallback: function () {}, // optional
   mouseMoveCallback: function () {}, // optional
@@ -40,7 +41,7 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggable.js"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.3.0/makeElementDraggable.js"
   integrity="sha384-FFS71Xf1AeZqSQCP4vOaP7cIRstRJhkvhTvL4YmjtW7XOSd8N7WJFE4FPnjUqLen"
   crossorigin="anonymous"
 ></script>
@@ -48,8 +49,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggableAndEditable.js"
-  integrity="sha384-A+jpCgdpYHwQJId5MfiKPZGF+RIyIB9/zPAHb0dG4H5YqQOPH/7j9XJKN2MyCOpA"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.3.0/makeElementDraggableAndEditable.js"
+  integrity="sha384-BVrVIDSmcfnHq5gU4v13vuzlLwSyovT2l40ZQMGlgoO2JLZrIgBIioDG7tR4COwM"
   crossorigin="anonymous"
 ></script>
 ```

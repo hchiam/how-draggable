@@ -3,6 +3,7 @@ function makeElementDraggableAndEditable(element, settings) {
   var mouseY = 0;
   var disableStyleReset = (settings && settings.disableStyleReset) || false;
   var snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
+  var disableEditing = settings && settings.disableEditing;
   var detectAsClickToEdit = false;
   // element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown);
@@ -23,7 +24,7 @@ function makeElementDraggableAndEditable(element, settings) {
     document.addEventListener("mouseup", stopDraggingOnMouseUp);
     document.addEventListener("mousemove", dragOnMouseMove);
     element.contentEditable = false;
-    detectAsClickToEdit = true; // enable editing when only clicking
+    detectAsClickToEdit = true && !disableEditing; // enable editing when only clicking
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
     }
@@ -36,7 +37,7 @@ function makeElementDraggableAndEditable(element, settings) {
     document.addEventListener("touchend", stopDraggingOnTouchEnd);
     document.addEventListener("touchmove", dragOnTouchMove);
     element.contentEditable = false;
-    detectAsClickToEdit = true; // enable editing when only clicking
+    detectAsClickToEdit = true && !disableEditing; // enable editing when only clicking
     if (settings && settings.touchStartCallback) {
       settings.touchStartCallback(element);
     }
