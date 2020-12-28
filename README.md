@@ -8,8 +8,8 @@ https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditabl
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -29,6 +29,7 @@ var settings = {
   },
   touchEndCallback: function () {}, // optional
   blurCallback: function () {}, // optional
+  snapCallback: function () {}, // optional
 };
 // now to actually use it:
 makeElementDraggableAndEditable(element, settings);
@@ -39,16 +40,16 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggable.js"
-  integrity="sha384-HEvXA8ROpDajvXCA2Bp8arOr8CZWLQ7UoffoOwPNF9dRcIQGDY17yWmGBRLx5tNZ"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggable.js"
+  integrity="sha384-FFS71Xf1AeZqSQCP4vOaP7cIRstRJhkvhTvL4YmjtW7XOSd8N7WJFE4FPnjUqLen"
   crossorigin="anonymous"
 ></script>
 ```
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.1.0/makeElementDraggableAndEditable.js"
-  integrity="sha384-9QUf72ouDKSNdfrlhALjl76VLYcGwV2Kv1DhWuTHiAdfawL+dNoASnaLwlk35Ci1"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.2.0/makeElementDraggableAndEditable.js"
+  integrity="sha384-A+jpCgdpYHwQJId5MfiKPZGF+RIyIB9/zPAHb0dG4H5YqQOPH/7j9XJKN2MyCOpA"
   crossorigin="anonymous"
 ></script>
 ```

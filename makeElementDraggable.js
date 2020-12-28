@@ -91,12 +91,15 @@ function makeElementDraggable(element, settings) {
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
 
+    var shouldRunSnapCallback = false;
+
     if (settings && settings.snapGridSize) {
       var threshold = settings.snapGridSize;
       var newLeft = snapToGrid(middleLeft, threshold) - width / 2;
       var newTop = snapToGrid(middleTop, threshold) - height / 2;
       element.style.left = newLeft + "px";
       element.style.top = newTop + "px";
+      shouldRunSnapCallback = true;
     }
 
     if (snapPoints && snapPoints.length) {
@@ -108,11 +111,16 @@ function makeElementDraggable(element, settings) {
           var newTop = snapPoint.y - height / 2;
           element.style.left = newLeft + "px";
           element.style.top = newTop + "px";
+          shouldRunSnapCallback = true;
           snapTimer = setTimeout(function () {
             return true; // exit Array.some()
           }, 100);
         }
       });
+    }
+
+    if (shouldRunSnapCallback && settings && settings.snapCallback) {
+      settings.snapCallback(element.style.left, element.style.top);
     }
   }
 

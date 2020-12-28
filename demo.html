@@ -49,6 +49,9 @@
             y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
           },
         ],
+        snapCallback: (left, top) => {
+          console.log("snapped to this position:", "left", left, "top", top);
+        },
         // snapGridSize: 25,
       };
       // makeElementDraggable(target, someSettings);
