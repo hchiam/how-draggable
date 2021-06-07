@@ -22,7 +22,7 @@ function makeElementDraggableAndEditable(element, settings) {
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
-      "Draggable and editable. Use arrow keys to drag. Start typing to edit."
+      "Draggable and editable. To drag, hit Escape and then hold down Option and hit the arrow keys. To edit, start typing."
     );
   }
 
@@ -194,6 +194,10 @@ function makeElementDraggableAndEditable(element, settings) {
           this.detectAsClickToEdit = false;
           element.contentEditable = false;
           moveWithArrowKeys(element, arrowKey);
+        } else if (isEscKey(event)) {
+          this.startedTyping = false;
+          this.detectAsClickToEdit = false;
+          element.contentEditable = false;
         } else if (!isTabKey(event)) {
           this.startedTyping = true;
           this.detectAsClickToEdit = true;
@@ -261,5 +265,11 @@ function makeElementDraggableAndEditable(element, settings) {
     var e = event || window.event;
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Tab" || key === 9;
+  }
+
+  function isEscKey(event) {
+    var e = event || window.event;
+    var key = e.key || e.code || e.keyCode || e.which;
+    return key === "Escape" || key === "Esc" || key === 27;
   }
 }

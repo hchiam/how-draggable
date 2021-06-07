@@ -15,7 +15,10 @@ function makeElementDraggable(element, settings) {
   setupKeyboardEvents(element);
 
   function setupAriaLabel(element) {
-    element.setAttribute("aria-label", "Draggable. Use arrow keys to drag.");
+    element.setAttribute(
+      "aria-label",
+      "Draggable. To drag this element around, hold down Option and hit the arrow keys."
+    );
   }
 
   function setupOnMouseDown(event) {
