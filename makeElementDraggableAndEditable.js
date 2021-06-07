@@ -1,16 +1,19 @@
 function makeElementDraggableAndEditable(element, settings) {
-  this.mouseX = 0;
-  this.mouseY = 0;
-  this.disableStyleReset = (settings && settings.disableStyleReset) || false;
-  this.snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
-  this.disableEditing = (settings && settings.disableEditing) || false;
-  this.detectAsClickToEdit = false;
-  this.startedTyping = false;
+  element.mouseX = 0;
+  element.mouseY = 0;
+  element.disableStyleReset = (settings && settings.disableStyleReset) || false;
+  element.snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
+  element.disableEditing = (settings && settings.disableEditing) || false;
+  element.detectAsClickToEdit = false;
+  element.startedTyping = false;
   // element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown, false);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   element.addEventListener("blur", resetEditableOnBlur, false);
-  if (!this.disableStyleReset || typeof this.disableStyleReset !== "boolean") {
+  if (
+    !element.disableStyleReset ||
+    typeof element.disableStyleReset !== "boolean"
+  ) {
     element.style.marginBlockStart = "initial";
     element.style.position = "absolute";
     element.style.minWidth = "1ch";
@@ -29,14 +32,14 @@ function makeElementDraggableAndEditable(element, settings) {
   function setupOnMouseDown(event) {
     var e = event || window.event;
     e.preventDefault();
-    this.mouseX =
+    element.mouseX =
       e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    this.mouseY =
+    element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp, false);
     document.addEventListener("mousemove", dragOnMouseMove, false);
     element.contentEditable = false;
-    this.detectAsClickToEdit = true && !this.disableEditing; // enable editing when only clicking
+    element.detectAsClickToEdit = true && !element.disableEditing; // enable editing when only clicking
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
     }
@@ -44,14 +47,14 @@ function makeElementDraggableAndEditable(element, settings) {
   function setupOnTouchStart(event) {
     var e = event || window.event;
     e.preventDefault();
-    this.mouseX =
+    element.mouseX =
       e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    this.mouseY =
+    element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd, false);
     document.addEventListener("touchmove", dragOnTouchMove, false);
     element.contentEditable = false;
-    this.detectAsClickToEdit = true && !this.disableEditing; // enable editing when only clicking
+    element.detectAsClickToEdit = true && !element.disableEditing; // enable editing when only clicking
     if (settings && settings.touchStartCallback) {
       settings.touchStartCallback(element);
     }
@@ -59,7 +62,7 @@ function makeElementDraggableAndEditable(element, settings) {
 
   function dragOnMouseMove(event) {
     drag(event);
-    this.detectAsClickToEdit = false; // disabling editing when dragging
+    element.detectAsClickToEdit = false; // disabling editing when dragging
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
     }
@@ -77,14 +80,14 @@ function makeElementDraggableAndEditable(element, settings) {
     var e = event || window.event;
     e.preventDefault();
     var xChange =
-      e.clientX - this.mouseX ||
-      (e.touches && e.touches.length && e.touches[0].pageX - this.mouseX);
+      e.clientX - element.mouseX ||
+      (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
     var yChange =
-      e.clientY - this.mouseY ||
-      (e.touches && e.touches.length && e.touches[0].pageY - this.mouseY);
-    this.mouseX =
+      e.clientY - element.mouseY ||
+      (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
+    element.mouseX =
       e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    this.mouseY =
+    element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
@@ -93,7 +96,7 @@ function makeElementDraggableAndEditable(element, settings) {
   function stopDraggingOnMouseUp() {
     document.removeEventListener("mouseup", stopDraggingOnMouseUp);
     document.removeEventListener("mousemove", dragOnMouseMove);
-    if (this.detectAsClickToEdit) {
+    if (element.detectAsClickToEdit) {
       element.contentEditable = true; // disabling editing when stopped dragging
       element.focus();
       element.removeEventListener("mousedown", setupOnMouseDown);
@@ -107,7 +110,7 @@ function makeElementDraggableAndEditable(element, settings) {
   function stopDraggingOnTouchEnd() {
     document.removeEventListener("touchend", stopDraggingOnTouchEnd);
     document.removeEventListener("touchmove", dragOnTouchMove);
-    if (this.detectAsClickToEdit) {
+    if (element.detectAsClickToEdit) {
       element.contentEditable = true; // disabling editing when stopped dragging
       element.focus();
       element.removeEventListener("touchstart", setupOnTouchStart);
@@ -124,7 +127,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.addEventListener("touchstart", setupOnTouchStart, {
       passive: true,
     });
-    this.startedTyping = false;
+    element.startedTyping = false;
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);
     }
@@ -150,10 +153,10 @@ function makeElementDraggableAndEditable(element, settings) {
       shouldRunSnapCallback = true;
     }
 
-    if (this.snapPoints && this.snapPoints.length) {
+    if (element.snapPoints && element.snapPoints.length) {
       var threshold = 50;
       clearTimeout(snapTimer);
-      this.snapPoints.some(function (snapPoint) {
+      element.snapPoints.some(function (snapPoint) {
         if (isSnapPointInRange(snapPoint, middleLeft, middleTop, threshold)) {
           var newLeft = snapPoint.x - width / 2;
           var newTop = snapPoint.y - height / 2;
@@ -190,17 +193,17 @@ function makeElementDraggableAndEditable(element, settings) {
       function (event) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
-        if (arrowKey && !this.startedTyping) {
-          this.detectAsClickToEdit = false;
+        if (arrowKey && !element.startedTyping) {
+          element.detectAsClickToEdit = false;
           element.contentEditable = false;
           moveWithArrowKeys(element, arrowKey);
         } else if (isEscKey(event)) {
-          this.startedTyping = false;
-          this.detectAsClickToEdit = false;
+          element.startedTyping = false;
+          element.detectAsClickToEdit = false;
           element.contentEditable = false;
         } else if (!isTabKey(event)) {
-          this.startedTyping = true;
-          this.detectAsClickToEdit = true;
+          element.startedTyping = true;
+          element.detectAsClickToEdit = true;
           element.contentEditable = true;
           element.focus();
         }

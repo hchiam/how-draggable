@@ -1,11 +1,14 @@
 function makeElementDraggable(element, settings) {
-  this.mouseX = 0;
-  this.mouseY = 0;
-  this.disableStyleReset = (settings && settings.disableStyleReset) || false;
-  this.snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
+  element.mouseX = 0;
+  element.mouseY = 0;
+  element.disableStyleReset = (settings && settings.disableStyleReset) || false;
+  element.snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
   element.addEventListener("mousedown", setupOnMouseDown, false);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
-  if (!this.disableStyleReset || typeof this.disableStyleReset !== "boolean") {
+  if (
+    !element.disableStyleReset ||
+    typeof element.disableStyleReset !== "boolean"
+  ) {
     element.style.marginBlockStart = "initial";
     element.style.position = "absolute";
     element.style.minWidth = "1ch";
@@ -24,9 +27,9 @@ function makeElementDraggable(element, settings) {
   function setupOnMouseDown(event) {
     var e = event || window.event;
     e.preventDefault();
-    this.mouseX =
+    element.mouseX =
       e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    this.mouseY =
+    element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp, false);
     document.addEventListener("mousemove", dragOnMouseMove, false);
@@ -37,9 +40,9 @@ function makeElementDraggable(element, settings) {
   function setupOnTouchStart(event) {
     var e = event || window.event;
     e.preventDefault();
-    this.mouseX =
+    element.mouseX =
       e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    this.mouseY =
+    element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd, false);
     document.addEventListener("touchmove", dragOnTouchMove, false);
@@ -67,14 +70,14 @@ function makeElementDraggable(element, settings) {
     var e = event || window.event;
     e.preventDefault();
     var xChange =
-      e.clientX - this.mouseX ||
-      (e.touches && e.touches.length && e.touches[0].pageX - this.mouseX);
+      e.clientX - element.mouseX ||
+      (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
     var yChange =
-      e.clientY - this.mouseY ||
-      (e.touches && e.touches.length && e.touches[0].pageY - this.mouseY);
-    this.mouseX =
+      e.clientY - element.mouseY ||
+      (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
+    element.mouseX =
       e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    this.mouseY =
+    element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     element.style.left = element.offsetLeft + xChange + "px";
     element.style.top = element.offsetTop + yChange + "px";
@@ -118,10 +121,10 @@ function makeElementDraggable(element, settings) {
       shouldRunSnapCallback = true;
     }
 
-    if (this.snapPoints && this.snapPoints.length) {
+    if (element.snapPoints && element.snapPoints.length) {
       var threshold = 50;
       clearTimeout(snapTimer);
-      this.snapPoints.some(function (snapPoint) {
+      element.snapPoints.some(function (snapPoint) {
         if (isSnapPointInRange(snapPoint, middleLeft, middleTop, threshold)) {
           var newLeft = snapPoint.x - width / 2;
           var newTop = snapPoint.y - height / 2;
