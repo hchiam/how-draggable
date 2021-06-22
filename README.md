@@ -20,17 +20,19 @@ var settings = {
   // NOTE: settings are all optional:
   disableStyleReset: false, // false by default
   disableEditing: false, // false by default
-  mouseDownCallback: function () {}, // optional
-  touchStartCallback: function () {}, // optional
-  mouseMoveCallback: function () {}, // optional
-  touchMoveCallback: function () {}, // optional
-  mouseUpCallback: function () {
+  mouseDownCallback: function (element) {}, // optional
+  touchStartCallback: function (element) {}, // optional
+  mouseMoveCallback: function (element) {}, // optional
+  touchMoveCallback: function (element) {}, // optional
+  mouseUpCallback: function (element) {}, // optional
+  touchEndCallback: function (element) {}, // optional
+  snapCallback: function (left, top) {
     // optional
-    alert("mouseup");
+    alert("left offset " + left + " and top offset " + top);
   },
-  touchEndCallback: function () {}, // optional
-  blurCallback: function () {}, // optional
-  snapCallback: function () {}, // optional
+  keyboardMoveCallback: function (element) {}, // optional
+  touchEndCallback: function (element) {}, // optional
+  blurCallback: function (element) {}, // optional
 };
 // now to actually use it:
 makeElementDraggableAndEditable(element, settings);
