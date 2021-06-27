@@ -59,6 +59,13 @@ Or:
 ></script>
 ```
 
+## Development notes
+
+```bash
+yarn
+yarn demo
+```
+
 ```bash
 # get the things to put into integrity="...":
 bash get-integrity.sh;
