@@ -7,7 +7,8 @@
     "demo": "open demo.html",
     "test": "jest --bail --findRelatedTests **/*.js",
     "lint": "prettier --write *.{js,css,html,scss,json,md,ts,tsx}",
-    "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'"
+    "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'",
+    "reminder": "echo \"don't forget to run \\033[1;34mbash get-integrity.sh\\033[0m\""
   },
   "dependencies": {},
   "devDependencies": {
@@ -19,7 +20,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run reminder"
     }
   },
   "lint-staged": {
