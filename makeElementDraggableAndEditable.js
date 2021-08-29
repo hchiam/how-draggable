@@ -198,20 +198,28 @@ function makeElementDraggableAndEditable(element, settings) {
         var arrowKey = getArrowKey(event);
         var selectionRange =
           window.getSelection() && window.getSelection().getRangeAt(0);
+        var notUsingKeyboardArrowsToSelectLetters =
+          selectionRange && !selectionRange.startOffset;
         if (
           arrowKey &&
-          ((selectionRange && !selectionRange.startOffset) ||
-            (!selectionRange && !element.startedTyping))
+          (!element.startedTyping || notUsingKeyboardArrowsToSelectLetters)
         ) {
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
           moveWithArrowKeys(element, arrowKey);
-        } else if (isEscKey(event)) {
+        } else if (isEscKey(event) || isTabKey(event)) {
           element.startedTyping = false;
           element.detectAsClickToEdit = false;
           element.contentEditable = false;
+          element.blur();
+          element.focus();
         } else if (!isTabKey(event)) {
-          if (!element.startedTyping && element !== document.activeElement) {
+          // if typing inside:
+          var didNotSelectAnyText =
+            selectionRange &&
+            (!selectionRange.startOffset ||
+              selectionRange.startOffset > element.innerText.length);
+          if (!element.startedTyping && didNotSelectAnyText) {
             setCaret(element);
           }
           element.startedTyping = true;
