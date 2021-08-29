@@ -20,7 +20,8 @@ function makeElementDraggable(element, settings) {
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
-      "Draggable. To drag this element around, hold down Option and hit the arrow keys."
+      "Draggable. To drag this element around, hit the arrow keys. Text: " +
+        element.innerText
     );
   }
 

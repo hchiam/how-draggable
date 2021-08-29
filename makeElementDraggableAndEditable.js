@@ -25,7 +25,8 @@ function makeElementDraggableAndEditable(element, settings) {
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
-      "Draggable and editable. To drag, hit Escape and then hold down Option and hit the arrow keys. To edit, start typing."
+      "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
+        element.innerText
     );
   }
 
