@@ -1,5 +1,6 @@
 {
   "name": "@hchiam/draggable",
+  "version": "3.5.0",
   "repository": "https://github.com/hchiam/draggable.git",
   "author": "hchiam <hchiam@users.noreply.github.com>",
   "license": "MIT",
