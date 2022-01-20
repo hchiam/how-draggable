@@ -1,14 +1,18 @@
 {
-  "name": "draggable",
+  "name": "@hchiam/draggable",
   "repository": "https://github.com/hchiam/draggable.git",
   "author": "hchiam <hchiam@users.noreply.github.com>",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "demo": "open demo.html",
     "test": "jest --bail --findRelatedTests **/*.js",
     "lint": "prettier --write *.{js,css,html,scss,json,md,ts,tsx}",
     "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'",
-    "reminder": "echo; echo; echo \"don't forget to run \\033[1;34mbash get-integrity.sh\\033[0m\"; echo; echo;"
+    "reminder": "echo; echo; echo \"don't forget to run \\033[1;34mbash get-integrity.sh\\033[0m\"; echo; echo;",
+    "publish": "npm publish --access public"
   },
   "dependencies": {},
   "devDependencies": {
