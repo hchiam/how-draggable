@@ -70,3 +70,7 @@ yarn demo
 # get the things to put into integrity="...":
 bash get-integrity.sh;
 ```
+
+A newer example of how to publish to npm (package.json setup only + `yarn publish`): 
+- https://github.com/hchiam/trysterollup/tree/24457690a715e1c57e701b0d51e3b6fd3e50491c
+- https://github.com/hchiam/trysterollup/blob/24457690a715e1c57e701b0d51e3b6fd3e50491c/package.json
