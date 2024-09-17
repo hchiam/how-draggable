@@ -227,6 +227,7 @@ export function makeElementDraggableAndEditable(
     var middleTop = top + height / 2;
 
     var shouldRunSnapCallback = false;
+    var snapWithinContainer = undefined;
 
     if (settings && settings.snapWithinElements) {
       settings.snapWithinElements.some(function (container: HTMLElement) {
@@ -245,6 +246,7 @@ export function makeElementDraggableAndEditable(
               containerRect.top + containerRect.height / 2 - height / 2;
             element.style.left = newLeft + "px";
             element.style.top = newTop + "px";
+            snapWithinContainer = container;
             shouldRunSnapCallback = true;
             snapTimer = setTimeout(function () {
               return true; // exit Array.some()
@@ -283,7 +285,8 @@ export function makeElementDraggableAndEditable(
     if (shouldRunSnapCallback && settings && settings.snapCallback) {
       settings.snapCallback(
         Number(element.style.left.replace("px", "")),
-        Number(element.style.top.replace("px", ""))
+        Number(element.style.top.replace("px", "")),
+        snapWithinContainer
       );
     }
   }

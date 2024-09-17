@@ -27,7 +27,11 @@ export class DraggableSettings {
   touchMoveCallback?: (element: DraggableElementOrEvent) => void;
   mouseUpCallback?: (element: DraggableElementOrEvent) => void;
   touchEndCallback?: (element: DraggableElementOrEvent) => void;
-  snapCallback?: (left: number, top: number) => void;
+  snapCallback?: (
+    left: number,
+    top: number,
+    containerElement?: HTMLElement
+  ) => void;
   keyboardMoveCallback?: (element: DraggableElementOrEvent) => void;
   blurCallback?: (element: DraggableElementOrEvent) => void;
 }
