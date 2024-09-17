@@ -233,20 +233,16 @@ export function makeElementDraggableAndEditable(
         if (container.checkVisibility()) {
           var containerRect = container.getBoundingClientRect();
           var containerStyles = getComputedStyle(container);
-          var containerLeft = Number(containerStyles.left.replace("px", ""));
-          var containerTop = Number(containerStyles.top.replace("px", ""));
-          var containerWidth = Number(containerStyles.width.replace("px", ""));
-          var containerHeight = Number(
-            containerStyles.height.replace("px", "")
-          );
           var isCenterWithinContainer =
             middleLeft >= containerRect.left &&
             middleLeft <= containerRect.left + containerRect.width &&
             middleTop >= containerRect.top &&
             middleTop <= containerRect.top + containerRect.height;
           if (isCenterWithinContainer) {
-            var newLeft = containerLeft + containerWidth / 2 - width / 2;
-            var newTop = containerTop + containerHeight / 2 - height / 2;
+            var newLeft =
+              containerRect.left + containerRect.width / 2 - width / 2;
+            var newTop =
+              containerRect.top + containerRect.height / 2 - height / 2;
             element.style.left = newLeft + "px";
             element.style.top = newTop + "px";
             shouldRunSnapCallback = true;
