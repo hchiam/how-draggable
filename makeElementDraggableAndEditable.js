@@ -1,4 +1,36 @@
-function makeElementDraggableAndEditable(element, settings) {
+/**
+class SnapPoint {
+  x: number;
+  y: number;
+}
+
+class DraggableElementOrEvent extends HTMLElement {
+  mouseX?: number;
+  mouseY?: number;
+  disableStyleReset?: boolean;
+  snapPoints?: SnapPoint[];
+}
+
+export class DraggableSettings {
+  enableKeyboardMovement?= true;
+  disableStyleReset?= false;
+  disableEditing?= false;
+  snapPoints?: SnapPoint[];
+  snapGridSize?: number;
+  mouseDownCallback?: (element: DraggableElementOrEvent) => void;
+  touchStartCallback?: (element: DraggableElementOrEvent) => void;
+  mouseMoveCallback?: (element: DraggableElementOrEvent) => void;
+  touchMoveCallback?: (element: DraggableElementOrEvent) => void;
+  mouseUpCallback?: (element: DraggableElementOrEvent) => void;
+  touchEndCallback?: (element: DraggableElementOrEvent) => void;
+  snapCallback?: (left: number, top: number) => void;
+  keyboardMoveCallback?: (element: DraggableElementOrEvent) => void;
+  blurCallback?: (element: DraggableElementOrEvent) => void;
+}
+
+export function makeElementDraggableAndEditable(element: DraggableElementOrEvent, settings: DraggableSettings) {
+*/
+export function makeElementDraggableAndEditable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;
@@ -8,25 +40,18 @@ function makeElementDraggableAndEditable(element, settings) {
   element.startedTyping = false;
   // element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown, false);
-  element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
+  element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   element.addEventListener("blur", resetEditableOnBlur, false);
-  if (
-    !element.disableStyleReset ||
-    typeof element.disableStyleReset !== "boolean"
-  ) {
-    element.style.marginBlockStart = "initial";
-    element.style.position = "absolute";
-    element.style.minWidth = "1ch";
-    element.style.minHeight = "1em";
-  }
   setupAriaLabel(element);
-  setupKeyboardEvents(element);
+  if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
+    setupKeyboardEvents(element);
+  }
 
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
       "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
-        element.innerText
+      element.innerText
     );
   }
 
@@ -38,7 +63,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp, false);
-    document.addEventListener("mousemove", dragOnMouseMove, false);
+    document.addEventListener("mousemove", dragOnMouseMove, { passive: false });
     element.contentEditable = false;
     element.detectAsClickToEdit = true && !element.disableEditing; // enable editing when only clicking
     if (settings && settings.mouseDownCallback) {
@@ -53,7 +78,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd, false);
-    document.addEventListener("touchmove", dragOnTouchMove, false);
+    document.addEventListener("touchmove", dragOnTouchMove, { passive: false });
     element.contentEditable = false;
     element.detectAsClickToEdit = true && !element.disableEditing; // enable editing when only clicking
     if (settings && settings.touchStartCallback) {
@@ -76,22 +101,58 @@ function makeElementDraggableAndEditable(element, settings) {
     }
   }
 
+  var firstTimeDragging = true;
   function drag(event) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
-    var xChange =
-      e.clientX - element.mouseX ||
-      (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
-    var yChange =
-      e.clientY - element.mouseY ||
-      (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
-    element.mouseX =
-      e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    element.mouseY =
-      e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
-    element.style.left = element.offsetLeft + xChange + "px";
-    element.style.top = element.offsetTop + yChange + "px";
+    if (firstTimeDragging) {
+      firstTimeDragging = false;
+      var xChange =
+        e.clientX - element.getBoundingClientRect().left ||
+        (e.touches && e.touches.length && e.touches[0].pageX - element.getBoundingClientRect().left);
+      var yChange =
+        e.clientY - element.getBoundingClientRect().top ||
+        (e.touches && e.touches.length && e.touches[0].pageY - element.getBoundingClientRect().top);
+      element.mouseX =
+        e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+      element.mouseY =
+        e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+      element.style.left = element.mouseX - xChange + "px";
+      element.style.top = element.mouseY - yChange + "px";
+
+      makePositionDraggable(element);
+    } else {
+      var xChange =
+        e.clientX - element.mouseX ||
+        (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
+      var yChange =
+        e.clientY - element.mouseY ||
+        (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
+      element.mouseX =
+        e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+      element.mouseY =
+        e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+      element.style.left = Number(element.style.left.replace('px', '')) + xChange + "px";
+      element.style.top = Number(element.style.top.replace('px', '')) + yChange + "px";
+    }
+  }
+
+  var alreadyMadePositionDraggable = false;
+  function makePositionDraggable(element) {
+    if (alreadyMadePositionDraggable) return;
+    alreadyMadePositionDraggable = true;
+    if (
+      !element.disableStyleReset ||
+      typeof element.disableStyleReset !== "boolean"
+    ) {
+      element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
+      element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
+      element.style.marginBlockStart = "initial";
+      element.style.minWidth = "1ch";
+      element.style.minHeight = "1em";
+      element.style.position = "fixed";
+    }
   }
 
   function stopDraggingOnMouseUp() {
@@ -125,9 +186,7 @@ function makeElementDraggableAndEditable(element, settings) {
   function resetEditableOnBlur() {
     element.contentEditable = false;
     element.addEventListener("mousedown", setupOnMouseDown, false);
-    element.addEventListener("touchstart", setupOnTouchStart, {
-      passive: true,
-    });
+    element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
     element.startedTyping = false;
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);
@@ -136,10 +195,10 @@ function makeElementDraggableAndEditable(element, settings) {
 
   var snapTimer;
   function snap(element) {
-    var left = element.offsetLeft;
-    var top = element.offsetTop;
-    var width = element.offsetWidth;
-    var height = element.offsetHeight;
+    var left = element.getBoundingClientRect().left;
+    var top = element.getBoundingClientRect().top;
+    var width = element.getBoundingClientRect().width;
+    var height = element.getBoundingClientRect().height;
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
 
@@ -196,10 +255,13 @@ function makeElementDraggableAndEditable(element, settings) {
       function (event) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
-        var selectionRange =
-          window.getSelection() && window.getSelection().getRangeAt(0);
+        var selectionRange = null;
+        try {
+          selectionRange =
+            window.getSelection() && window.getSelection().getRangeAt(0);
+        } catch (e) { }
         var notUsingKeyboardArrowsToSelectLetters =
-          selectionRange && !selectionRange.startOffset;
+          !selectionRange || !selectionRange.startOffset;
         if (
           arrowKey &&
           (!element.startedTyping || notUsingKeyboardArrowsToSelectLetters)
@@ -264,6 +326,7 @@ function makeElementDraggableAndEditable(element, settings) {
     }
     element.style.left = offsetLeft + "px";
     element.style.top = offsetTop + "px";
+    makePositionDraggable(element);
     if (settings && settings.keyboardMoveCallback) {
       settings.keyboardMoveCallback(element);
     }

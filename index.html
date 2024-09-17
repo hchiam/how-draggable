@@ -28,14 +28,17 @@
       }
     </style>
   </head>
+
   <body>
     <p id="target" draggable="true" clickable="true" tabindex="0">
       Drag Me, or Double-Click Me For Editing!
     </p>
     <div id="snap_point">snap point</div>
-    <!-- <script src="makeElementDraggable.js"></script> -->
-    <script src="makeElementDraggableAndEditable.js"></script>
-    <script>
+    <script type="module">
+      import {
+        makeElementDraggable,
+        makeElementDraggableAndEditable,
+      } from "./index.js";
       var element = document.getElementById("target");
       var snapPointElement = document.getElementById("snap_point");
       var someSettings = {
@@ -54,6 +57,7 @@
         },
         // snapGridSize: 25,
         // disableEditing: true,
+        // enableKeyboardMovement: false,
       };
       // makeElementDraggable(target, someSettings);
       makeElementDraggableAndEditable(target, someSettings);
