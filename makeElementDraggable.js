@@ -30,7 +30,7 @@ export class DraggableSettings {
 
 export function makeElementDraggable(element: DraggableElementOrEvent, settings: DraggableSettings) {
 */
-function makeElementDraggable(element, settings) {
+export function makeElementDraggable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;

@@ -8,7 +8,8 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "demo": "open demo.html",
+    "dev": "yarn demo",
+    "demo": "vite # index.html",
     "test": "jest --bail --findRelatedTests **/*.js",
     "lint": "prettier --write *.{js,css,html,scss,json,md,ts,tsx}",
     "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'",
