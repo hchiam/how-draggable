@@ -1,4 +1,6 @@
-# Make anything draggable. And editable. ![version](https://img.shields.io/github/release/hchiam/draggable) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# @hchiam/draggable
+
+## Make anything draggable. And editable. ![version](https://img.shields.io/github/release/hchiam/draggable) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [Live demo](https://codepen.io/hchiam/full/pobxgBo) (mouse, touch, keyboard, or screen reader!)
 
@@ -71,6 +73,7 @@ yarn demo
 bash get-integrity.sh;
 ```
 
-A newer example of how to publish to npm (package.json setup only + `yarn publish`): 
-- https://github.com/hchiam/trysterollup/tree/24457690a715e1c57e701b0d51e3b6fd3e50491c
-- https://github.com/hchiam/trysterollup/blob/24457690a715e1c57e701b0d51e3b6fd3e50491c/package.json
+A newer example of how to publish to npm (package.json setup only + `yarn publish`):
+
+- <https://github.com/hchiam/trysterollup/tree/24457690a715e1c57e701b0d51e3b6fd3e50491c>
+- <https://github.com/hchiam/trysterollup/blob/24457690a715e1c57e701b0d51e3b6fd3e50491c/package.json>
