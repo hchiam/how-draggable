@@ -11,13 +11,13 @@ yarn add how-draggable
 or with CDNs:
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@main/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@main/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditable.js
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.5.6/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.5.6/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -50,8 +50,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.5.6/makeElementDraggable.js"
-  integrity="sha384-3x+bw8kk4OWSrI3Xx0TDJ1GVnV0jXQJuwbHF8+LCIwBSZ9+9rLLVQNqrAZxxYFMC"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggable.js"
+  integrity="sha384-vTMs+WHhYzEzq5+GxzDINjOkGtmWdfjPFUmjE7yATi+d/VJoVBtOBC1y0oPo6H3v"
   crossorigin="anonymous"
 ></script>
 ```
@@ -60,8 +60,8 @@ Or:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.5.6/makeElementDraggableAndEditable.js"
-  integrity="sha384-7c6V7StQy31+frdBquPTJ+77TdxDMjpHTMJwz2M0TNW6S6vRQ9WMTXq675/EMbHL"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggableAndEditable.js"
+  integrity="sha384-VWIGLrV2DlJr2SmgOuyi4qQgpPftkwQ/U4E7Dh1cnRlAV34hJQnUD4HXjwbqBUfZ"
   crossorigin="anonymous"
 ></script>
 ```
