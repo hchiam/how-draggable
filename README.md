@@ -60,7 +60,7 @@ Or:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.5/makeElementDraggableAndEditable.js"
+  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.5.5/makeElementDraggableAndEditable.js"
   integrity="sha384-0gzf80wLisosL7pLUjzknXl5TQPfxtu16rHcGZrRPMAU+4wpXk8iYaI5KfTdqTiR"
   crossorigin="anonymous"
 ></script>
