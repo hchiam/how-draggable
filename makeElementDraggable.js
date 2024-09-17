@@ -8,11 +8,7 @@ function makeElementDraggable(element, settings) {
   element.addEventListener("mousedown", setupOnMouseDown, false);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   setupAriaLabel(element);
-  if (
-    settings &&
-    (typeof settings.enableKeyboardMovement === "undefined" ||
-      settings.enableKeyboardMovement)
-  ) {
+  if (!settings || !settings.disableKeyboardMovement) {
     setupKeyboardEvents(element);
   }
   function setupAriaLabel(element) {

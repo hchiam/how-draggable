@@ -14,7 +14,7 @@ export class DraggableElementOrEvent extends HTMLElement {
 }
 
 export class DraggableSettings {
-  enableKeyboardMovement?: boolean; // true;
+  disableKeyboardMovement?: boolean; // false;
   disableStyleReset?: boolean; // false;
   disableEditing?: boolean; // false;
   snapPoints?: SnapPoint[];

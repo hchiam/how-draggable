@@ -20,11 +20,7 @@ function makeElementDraggableAndEditable(
   element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   element.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
-  if (
-    settings &&
-    (typeof settings.enableKeyboardMovement === "undefined" ||
-      settings.enableKeyboardMovement)
-  ) {
+  if (!settings || !settings.disableKeyboardMovement) {
     setupKeyboardEvents(element);
   }
 

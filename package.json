@@ -13,7 +13,7 @@
     "url": "https://github.com/hchiam/how-draggable.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc; yarn pkg",
     "dev": "yarn demo",
     "demo": "yarn build; vite # index.html",
     "test": "jest --bail --findRelatedTests **/*.js",

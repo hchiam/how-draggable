@@ -26,8 +26,12 @@ Example usage:
 var element = document.getElementById("#some-selector");
 var settings = {
   // NOTE: settings are all optional:
+  disableKeyboardMovement: false, // false by default
   disableStyleReset: false, // false by default
   disableEditing: false, // false by default
+  // snapPoints?: SnapPoint[];
+  // snapGridSize?: number;
+  // snapThreshold?: number;
   mouseDownCallback: function (element) {}, // optional
   touchStartCallback: function (element) {}, // optional
   mouseMoveCallback: function (element) {}, // optional
@@ -51,7 +55,7 @@ CDN usage:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.6.0/makeElementDraggable.js"
-  integrity="sha384-1FXXqZmtjdqyu/2/qTxNll/8pdCjGh/CmHhd9dhQBki7OQLBvMnGx4rX2FNQNc9z"
+  integrity="sha384-p8wHO1b47yVMnUmZwvNCG/qsQkBkWk2xT0cmqkXXz77QEGpWM/XSdRdeWb+V+si3"
   crossorigin="anonymous"
 ></script>
 ```
@@ -61,7 +65,7 @@ Or:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.6.0/makeElementDraggableAndEditable.js"
-  integrity="sha384-YaoYEKGFYN2+LhoQiP4B0HtoZj1397ZnSECoYsNdNGrIZEbzV13r1V2RL/rxwN+W"
+  integrity="sha384-VTKNpzWPC6tuOViYhS//WCUNK8HgwZO0pqRDlFDj09/yvdwmtnJfpeeUzQYbCtsQ"
   crossorigin="anonymous"
 ></script>
 ```
