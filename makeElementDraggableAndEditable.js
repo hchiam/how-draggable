@@ -1,3 +1,34 @@
+/**
+class SnapPoint {
+  x: number;
+  y: number;
+}
+
+class DraggableElementOrEvent extends HTMLElement {
+  mouseX?: number;
+  mouseY?: number;
+  disableStyleReset?: boolean;
+  snapPoints?: SnapPoint[];
+}
+
+export class DraggableSettings {
+  disableStyleReset?= false;
+  disableEditing?= false;
+  snapPoints?: SnapPoint[];
+  snapGridSize?: number;
+  mouseDownCallback?: (element: DraggableElementOrEvent) => void;
+  touchStartCallback?: (element: DraggableElementOrEvent) => void;
+  mouseMoveCallback?: (element: DraggableElementOrEvent) => void;
+  touchMoveCallback?: (element: DraggableElementOrEvent) => void;
+  mouseUpCallback?: (element: DraggableElementOrEvent) => void;
+  touchEndCallback?: (element: DraggableElementOrEvent) => void;
+  snapCallback?: (left: number, top: number) => void;
+  keyboardMoveCallback?: (element: DraggableElementOrEvent) => void;
+  blurCallback?: (element: DraggableElementOrEvent) => void;
+}
+
+export function makeElementDraggableAndEditable(element: DraggableElementOrEvent, settings: DraggableSettings) {
+*/
 function makeElementDraggableAndEditable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
@@ -10,15 +41,6 @@ function makeElementDraggableAndEditable(element, settings) {
   element.addEventListener("mousedown", setupOnMouseDown, false);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   element.addEventListener("blur", resetEditableOnBlur, false);
-  if (
-    !element.disableStyleReset ||
-    typeof element.disableStyleReset !== "boolean"
-  ) {
-    element.style.marginBlockStart = "initial";
-    element.style.position = "absolute";
-    element.style.minWidth = "1ch";
-    element.style.minHeight = "1em";
-  }
   setupAriaLabel(element);
   setupKeyboardEvents(element);
 
@@ -26,7 +48,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.setAttribute(
       "aria-label",
       "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
-        element.innerText
+      element.innerText
     );
   }
 
@@ -76,22 +98,52 @@ function makeElementDraggableAndEditable(element, settings) {
     }
   }
 
+  var firstTimeDragging = true;
   function drag(event) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
-    var xChange =
-      e.clientX - element.mouseX ||
-      (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
-    var yChange =
-      e.clientY - element.mouseY ||
-      (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
-    element.mouseX =
-      e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
-    element.mouseY =
-      e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
-    element.style.left = element.offsetLeft + xChange + "px";
-    element.style.top = element.offsetTop + yChange + "px";
+    if (firstTimeDragging) {
+      firstTimeDragging = false;
+      var xChange =
+        e.clientX - element.getBoundingClientRect().left ||
+        (e.touches && e.touches.length && e.touches[0].pageX - element.getBoundingClientRect().left);
+      var yChange =
+        e.clientY - element.getBoundingClientRect().top ||
+        (e.touches && e.touches.length && e.touches[0].pageY - element.getBoundingClientRect().top);
+      element.mouseX =
+        e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+      element.mouseY =
+        e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+      element.style.left = element.mouseX - xChange + "px";
+      element.style.top = element.mouseY - yChange + "px";
+
+      if (
+        !element.disableStyleReset ||
+        typeof element.disableStyleReset !== "boolean"
+      ) {
+        element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
+        element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
+        element.style.marginBlockStart = "initial";
+        element.style.minWidth = "1ch";
+        element.style.minHeight = "1em";
+        element.style.position = "fixed";
+
+      }
+    } else {
+      var xChange =
+        e.clientX - element.mouseX ||
+        (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
+      var yChange =
+        e.clientY - element.mouseY ||
+        (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
+      element.mouseX =
+        e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+      element.mouseY =
+        e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+      element.style.left = Number(element.style.left.replace('px', '')) + xChange + "px";
+      element.style.top = Number(element.style.top.replace('px', '')) + yChange + "px";
+    }
   }
 
   function stopDraggingOnMouseUp() {
@@ -136,10 +188,10 @@ function makeElementDraggableAndEditable(element, settings) {
 
   var snapTimer;
   function snap(element) {
-    var left = element.offsetLeft;
-    var top = element.offsetTop;
-    var width = element.offsetWidth;
-    var height = element.offsetHeight;
+    var left = element.getBoundingClientRect().left;
+    var top = element.getBoundingClientRect().top;
+    var width = element.getBoundingClientRect().width;
+    var height = element.getBoundingClientRect().height;
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
 
