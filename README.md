@@ -32,6 +32,7 @@ var settings = {
   // snapPoints?: SnapPoint[];
   // snapGridSize?: number;
   // snapThreshold?: number;
+  // snapWithinElements?: HTMLElement[];
   mouseDownCallback: function (element) {}, // optional
   touchStartCallback: function (element) {}, // optional
   mouseMoveCallback: function (element) {}, // optional
