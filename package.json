@@ -1,6 +1,6 @@
 {
   "name": "how-draggable",
-  "version": "3.5.4",
+  "version": "3.5.5",
   "main": "index.js",
   "author": "hchiam",
   "description": "Make anything draggable (and editable)!",
