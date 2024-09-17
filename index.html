@@ -43,12 +43,12 @@
         touchMoveCallback: (element) =>
           console.log("touchmove", element.style.left, element.style.top),
         snapWithinElements: [snapPointElement],
-        // snapPoints: [
-        //   {
-        //     x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
-        //     y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
-        //   },
-        // ],
+        snapPoints: [
+          {
+            x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
+            y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
+          },
+        ],
         snapCallback: (left, top) => {
           console.log("snapped to this position:", "left", left, "top", top);
         },
