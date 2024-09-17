@@ -33,7 +33,7 @@ export function makeElementDraggableAndEditable(
   }
 
   function setupOnMouseDown(event: MouseEvent | TouchEvent) {
-    var e = event || window.event;
+    var e = event || (window.event as MouseEvent | TouchEvent);
     e.preventDefault();
     element.mouseX =
       (e as MouseEvent).clientX ||
@@ -54,7 +54,7 @@ export function makeElementDraggableAndEditable(
     }
   }
   function setupOnTouchStart(event: MouseEvent | TouchEvent) {
-    var e = event || window.event;
+    var e = event || (window.event as MouseEvent | TouchEvent);
     e.preventDefault();
     element.mouseX =
       (e as MouseEvent).clientX ||
@@ -93,7 +93,7 @@ export function makeElementDraggableAndEditable(
   var firstTimeDragging = true;
   function drag(event: MouseEvent | TouchEvent) {
     element.focus();
-    var e = event || window.event;
+    var e = event || (window.event as MouseEvent | TouchEvent);
     e.preventDefault();
     if (firstTimeDragging) {
       firstTimeDragging = false;
@@ -230,26 +230,30 @@ export function makeElementDraggableAndEditable(
 
     if (settings && settings.snapWithinElements) {
       settings.snapWithinElements.some(function (container: HTMLElement) {
-        var containerRect = container.getBoundingClientRect();
-        var containerStyles = getComputedStyle(container);
-        var containerLeft = Number(containerStyles.left.replace("px", ""));
-        var containerTop = Number(containerStyles.top.replace("px", ""));
-        var containerWidth = Number(containerStyles.width.replace("px", ""));
-        var containerHeight = Number(containerStyles.height.replace("px", ""));
-        var isCenterWithinContainer =
-          middleLeft >= containerRect.left &&
-          middleLeft <= containerRect.left + containerRect.width &&
-          middleTop >= containerRect.top &&
-          middleTop <= containerRect.top + containerRect.height;
-        if (isCenterWithinContainer) {
-          var newLeft = containerLeft + containerWidth / 2 - width / 2;
-          var newTop = containerTop + containerHeight / 2 - height / 2;
-          element.style.left = newLeft + "px";
-          element.style.top = newTop + "px";
-          shouldRunSnapCallback = true;
-          snapTimer = setTimeout(function () {
-            return true; // exit Array.some()
-          }, 100);
+        if (container.checkVisibility()) {
+          var containerRect = container.getBoundingClientRect();
+          var containerStyles = getComputedStyle(container);
+          var containerLeft = Number(containerStyles.left.replace("px", ""));
+          var containerTop = Number(containerStyles.top.replace("px", ""));
+          var containerWidth = Number(containerStyles.width.replace("px", ""));
+          var containerHeight = Number(
+            containerStyles.height.replace("px", "")
+          );
+          var isCenterWithinContainer =
+            middleLeft >= containerRect.left &&
+            middleLeft <= containerRect.left + containerRect.width &&
+            middleTop >= containerRect.top &&
+            middleTop <= containerRect.top + containerRect.height;
+          if (isCenterWithinContainer) {
+            var newLeft = containerLeft + containerWidth / 2 - width / 2;
+            var newTop = containerTop + containerHeight / 2 - height / 2;
+            element.style.left = newLeft + "px";
+            element.style.top = newTop + "px";
+            shouldRunSnapCallback = true;
+            snapTimer = setTimeout(function () {
+              return true; // exit Array.some()
+            }, 100);
+          }
         }
       });
     }
@@ -391,7 +395,7 @@ export function makeElementDraggableAndEditable(
   }
 
   function getArrowKey(event: KeyboardEvent): string {
-    var e = event || window.event;
+    var e = event || (window.event as KeyboardEvent);
     var key = e.key || e.code || e.keyCode || e.which;
     switch (key) {
       case "ArrowLeft":
@@ -416,13 +420,13 @@ export function makeElementDraggableAndEditable(
   }
 
   function isTabKey(event: KeyboardEvent) {
-    var e = event || window.event;
+    var e = event || (window.event as KeyboardEvent);
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Tab" || key === 9;
   }
 
   function isEscKey(event: KeyboardEvent) {
-    var e = event || window.event;
+    var e = event || (window.event as KeyboardEvent);
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Escape" || key === "Esc" || key === 27;
   }
