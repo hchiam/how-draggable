@@ -32,10 +32,8 @@
   </head>
 
   <body>
-    <p id="target" draggable="true" clickable="true" tabindex="0">
-      Drag Me, or Double-Click Me For Editing!
-    </p>
-    <div id="snap_point">snap point</div>
+    <p id="target" draggable="true" clickable="true" tabindex="0">Drag Me!</p>
+    <div id="snap_point">snap point <br />container <br />with height</div>
     <script>
       var element = document.getElementById("target");
       var snapPointElement = document.getElementById("snap_point");
@@ -55,7 +53,7 @@
           console.log("snapped to this position:", "left", left, "top", top);
         },
         // snapGridSize: 25,
-        // disableEditing: true,
+        disableEditing: true,
         // enableKeyboardMovement: false,
       };
       // makeElementDraggable(target, someSettings);
