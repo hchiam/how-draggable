@@ -1,6 +1,6 @@
 {
   "name": "how-draggable",
-  "version": "3.6.3",
+  "version": "3.7.0",
   "main": "makeElementDraggableAndEditable.js",
   "author": "hchiam",
   "description": "Make anything draggable (and editable)!",
