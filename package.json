@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc; yarn pkg",
     "dev": "yarn demo",
-    "demo": "yarn build; vite # index.html",
+    "demo": "tsc; vite # index.html",
     "test": "jest --bail --findRelatedTests **/*.js",
     "lint": "prettier --write *.{js,css,html,scss,json,md,ts,tsx}",
     "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'",

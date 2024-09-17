@@ -140,13 +140,39 @@ function makeElementDraggable(element, settings) {
   var snapTimer;
   function snap(element) {
     var _a;
-    var left = element.getBoundingClientRect().left;
-    var top = element.getBoundingClientRect().top;
-    var width = element.getBoundingClientRect().width;
-    var height = element.getBoundingClientRect().height;
+    var elementRect = element.getBoundingClientRect();
+    var left = elementRect.left;
+    var top = elementRect.top;
+    var width = elementRect.width;
+    var height = elementRect.height;
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
     var shouldRunSnapCallback = false;
+    if (settings && settings.snapWithinElements) {
+      settings.snapWithinElements.some(function (container) {
+        var containerRect = container.getBoundingClientRect();
+        var containerStyles = getComputedStyle(container);
+        var containerLeft = Number(containerStyles.left.replace("px", ""));
+        var containerTop = Number(containerStyles.top.replace("px", ""));
+        var containerWidth = Number(containerStyles.width.replace("px", ""));
+        var containerHeight = Number(containerStyles.height.replace("px", ""));
+        var isCenterWithinContainer =
+          middleLeft >= containerRect.left &&
+          middleLeft <= containerRect.left + containerRect.width &&
+          middleTop >= containerRect.top &&
+          middleTop <= containerRect.top + containerRect.height;
+        if (isCenterWithinContainer) {
+          var newLeft = containerLeft + containerWidth / 2 - width / 2;
+          var newTop = containerTop + containerHeight / 2 - height / 2;
+          element.style.left = newLeft + "px";
+          element.style.top = newTop + "px";
+          shouldRunSnapCallback = true;
+          snapTimer = setTimeout(function () {
+            return true; // exit Array.some()
+          }, 100);
+        }
+      });
+    }
     if (settings && settings.snapGridSize) {
       var threshold = settings.snapGridSize;
       var newLeft = snapToGrid(middleLeft, threshold) - width / 2;

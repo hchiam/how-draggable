@@ -27,8 +27,8 @@
         z-index: -1;
       }
     </style>
-    <script src="makeElementDraggable.js"></script>
-    <script src="makeElementDraggableAndEditable.js"></script>
+    <script src="makeElementDraggable.ts"></script>
+    <script src="makeElementDraggableAndEditable.ts"></script>
   </head>
 
   <body>
@@ -44,12 +44,13 @@
           console.log("mousemove", element.style.left, element.style.top),
         touchMoveCallback: (element) =>
           console.log("touchmove", element.style.left, element.style.top),
-        snapPoints: [
-          {
-            x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
-            y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
-          },
-        ],
+        snapWithinElements: [snapPointElement],
+        // snapPoints: [
+        //   {
+        //     x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
+        //     y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
+        //   },
+        // ],
         snapCallback: (left, top) => {
           console.log("snapped to this position:", "left", left, "top", top);
         },
