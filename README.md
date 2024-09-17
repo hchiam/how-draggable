@@ -16,8 +16,8 @@ https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditabl
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.6.0/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.6.0/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -26,8 +26,12 @@ Example usage:
 var element = document.getElementById("#some-selector");
 var settings = {
   // NOTE: settings are all optional:
+  disableKeyboardMovement: false, // false by default
   disableStyleReset: false, // false by default
   disableEditing: false, // false by default
+  // snapPoints?: SnapPoint[];
+  // snapGridSize?: number;
+  // snapThreshold?: number;
   mouseDownCallback: function (element) {}, // optional
   touchStartCallback: function (element) {}, // optional
   mouseMoveCallback: function (element) {}, // optional
@@ -50,8 +54,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggable.js"
-  integrity="sha384-31N6S4cA/CwKKDjmXT3V9p8owh/FFenRjhHbz5GmDY8hax+kgF4KfJFyRn1BqsGs"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.6.0/makeElementDraggable.js"
+  integrity="sha384-YK2XyNzNMkfFMZy/+a3Avp3Qz+pwtvIE1uLKpgeaEQNOCxkypXeEVbjNuTadBnFJ"
   crossorigin="anonymous"
 ></script>
 ```
@@ -60,8 +64,8 @@ Or:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggableAndEditable.js"
-  integrity="sha384-0Cv2Kf901dH6dcIdmWaV7tq/tm9Q48esMBUZT2Obrhus1u9hp6Gypfz3y3/I+bZh"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.6.0/makeElementDraggableAndEditable.js"
+  integrity="sha384-7TUz2MZaNE4dt4tZcf6RqBzgXG6yH6La5CQXtLgNJaw+bVsPy1GfyRuZFBJq9d9i"
   crossorigin="anonymous"
 ></script>
 ```

@@ -14,11 +14,13 @@ export class DraggableElementOrEvent extends HTMLElement {
 }
 
 export class DraggableSettings {
-  enableKeyboardMovement?: boolean; // true;
+  disableKeyboardMovement?: boolean; // false;
   disableStyleReset?: boolean; // false;
   disableEditing?: boolean; // false;
   snapPoints?: SnapPoint[];
   snapGridSize?: number;
+  snapThreshold?: number;
+  snapWithinElements?: HTMLElement[];
   mouseDownCallback?: (element: DraggableElementOrEvent) => void;
   touchStartCallback?: (element: DraggableElementOrEvent) => void;
   mouseMoveCallback?: (element: DraggableElementOrEvent) => void;

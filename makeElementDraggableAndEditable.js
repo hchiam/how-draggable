@@ -13,11 +13,7 @@ function makeElementDraggableAndEditable(element, settings) {
   element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   element.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
-  if (
-    settings &&
-    (typeof settings.enableKeyboardMovement === "undefined" ||
-      settings.enableKeyboardMovement)
-  ) {
+  if (!settings || !settings.disableKeyboardMovement) {
     setupKeyboardEvents(element);
   }
   function setupAriaLabel(element) {
@@ -174,13 +170,40 @@ function makeElementDraggableAndEditable(element, settings) {
   }
   var snapTimer;
   function snap(element) {
-    var left = element.getBoundingClientRect().left;
-    var top = element.getBoundingClientRect().top;
-    var width = element.getBoundingClientRect().width;
-    var height = element.getBoundingClientRect().height;
+    var _a;
+    var elementRect = element.getBoundingClientRect();
+    var left = elementRect.left;
+    var top = elementRect.top;
+    var width = elementRect.width;
+    var height = elementRect.height;
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
     var shouldRunSnapCallback = false;
+    if (settings && settings.snapWithinElements) {
+      settings.snapWithinElements.some(function (container) {
+        var containerRect = container.getBoundingClientRect();
+        var containerStyles = getComputedStyle(container);
+        var containerLeft = Number(containerStyles.left.replace("px", ""));
+        var containerTop = Number(containerStyles.top.replace("px", ""));
+        var containerWidth = Number(containerStyles.width.replace("px", ""));
+        var containerHeight = Number(containerStyles.height.replace("px", ""));
+        var isCenterWithinContainer =
+          middleLeft >= containerRect.left &&
+          middleLeft <= containerRect.left + containerRect.width &&
+          middleTop >= containerRect.top &&
+          middleTop <= containerRect.top + containerRect.height;
+        if (isCenterWithinContainer) {
+          var newLeft = containerLeft + containerWidth / 2 - width / 2;
+          var newTop = containerTop + containerHeight / 2 - height / 2;
+          element.style.left = newLeft + "px";
+          element.style.top = newTop + "px";
+          shouldRunSnapCallback = true;
+          snapTimer = setTimeout(function () {
+            return true; // exit Array.some()
+          }, 100);
+        }
+      });
+    }
     if (settings && settings.snapGridSize) {
       var threshold = settings.snapGridSize;
       var newLeft = snapToGrid(middleLeft, threshold) - width / 2;
@@ -190,7 +213,10 @@ function makeElementDraggableAndEditable(element, settings) {
       shouldRunSnapCallback = true;
     }
     if (element.snapPoints && element.snapPoints.length) {
-      var threshold = 50;
+      var threshold =
+        (_a = settings && settings.snapThreshold) !== null && _a !== void 0
+          ? _a
+          : 50;
       clearTimeout(snapTimer);
       element.snapPoints.some(function (snapPoint) {
         if (isSnapPointInRange(snapPoint, middleLeft, middleTop, threshold)) {
