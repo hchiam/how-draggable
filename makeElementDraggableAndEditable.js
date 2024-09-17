@@ -30,7 +30,7 @@ export class DraggableSettings {
 
 export function makeElementDraggableAndEditable(element: DraggableElementOrEvent, settings: DraggableSettings) {
 */
-export function makeElementDraggableAndEditable(element, settings) {
+function makeElementDraggableAndEditable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;
@@ -43,7 +43,11 @@ export function makeElementDraggableAndEditable(element, settings) {
   element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   element.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
-  if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
+  if (
+    settings &&
+    (typeof settings.enableKeyboardMovement === "undefined" ||
+      settings.enableKeyboardMovement)
+  ) {
     setupKeyboardEvents(element);
   }
 
@@ -51,7 +55,7 @@ export function makeElementDraggableAndEditable(element, settings) {
     element.setAttribute(
       "aria-label",
       "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
-      element.innerText
+        element.innerText
     );
   }
 
@@ -110,10 +114,14 @@ export function makeElementDraggableAndEditable(element, settings) {
       firstTimeDragging = false;
       var xChange =
         e.clientX - element.getBoundingClientRect().left ||
-        (e.touches && e.touches.length && e.touches[0].pageX - element.getBoundingClientRect().left);
+        (e.touches &&
+          e.touches.length &&
+          e.touches[0].pageX - element.getBoundingClientRect().left);
       var yChange =
         e.clientY - element.getBoundingClientRect().top ||
-        (e.touches && e.touches.length && e.touches[0].pageY - element.getBoundingClientRect().top);
+        (e.touches &&
+          e.touches.length &&
+          e.touches[0].pageY - element.getBoundingClientRect().top);
       element.mouseX =
         e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
       element.mouseY =
@@ -133,8 +141,10 @@ export function makeElementDraggableAndEditable(element, settings) {
         e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
       element.mouseY =
         e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
-      element.style.left = Number(element.style.left.replace('px', '')) + xChange + "px";
-      element.style.top = Number(element.style.top.replace('px', '')) + yChange + "px";
+      element.style.left =
+        Number(element.style.left.replace("px", "")) + xChange + "px";
+      element.style.top =
+        Number(element.style.top.replace("px", "")) + yChange + "px";
     }
   }
 
@@ -146,8 +156,16 @@ export function makeElementDraggableAndEditable(element, settings) {
       !element.disableStyleReset ||
       typeof element.disableStyleReset !== "boolean"
     ) {
-      element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
-      element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
+      element.style.setProperty(
+        "width",
+        element.getBoundingClientRect().width + "px",
+        "important"
+      );
+      element.style.setProperty(
+        "height",
+        element.getBoundingClientRect().height + "px",
+        "important"
+      );
       element.style.marginBlockStart = "initial";
       element.style.minWidth = "1ch";
       element.style.minHeight = "1em";
@@ -186,7 +204,9 @@ export function makeElementDraggableAndEditable(element, settings) {
   function resetEditableOnBlur() {
     element.contentEditable = false;
     element.addEventListener("mousedown", setupOnMouseDown, false);
-    element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
+    element.addEventListener("touchstart", setupOnTouchStart, {
+      passive: false,
+    });
     element.startedTyping = false;
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);
@@ -259,7 +279,7 @@ export function makeElementDraggableAndEditable(element, settings) {
         try {
           selectionRange =
             window.getSelection() && window.getSelection().getRangeAt(0);
-        } catch (e) { }
+        } catch (e) {}
         var notUsingKeyboardArrowsToSelectLetters =
           !selectionRange || !selectionRange.startOffset;
         if (

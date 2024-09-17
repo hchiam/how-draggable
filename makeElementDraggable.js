@@ -30,7 +30,7 @@ export class DraggableSettings {
 
 export function makeElementDraggable(element: DraggableElementOrEvent, settings: DraggableSettings) {
 */
-export function makeElementDraggable(element, settings) {
+function makeElementDraggable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;
@@ -38,7 +38,11 @@ export function makeElementDraggable(element, settings) {
   element.addEventListener("mousedown", setupOnMouseDown, false);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   setupAriaLabel(element);
-  if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
+  if (
+    settings &&
+    (typeof settings.enableKeyboardMovement === "undefined" ||
+      settings.enableKeyboardMovement)
+  ) {
     setupKeyboardEvents(element);
   }
 
@@ -46,7 +50,7 @@ export function makeElementDraggable(element, settings) {
     element.setAttribute(
       "aria-label",
       "Draggable. To drag this element around, hit the arrow keys. Text: " +
-      element.innerText
+        element.innerText
     );
   }
 
@@ -100,10 +104,14 @@ export function makeElementDraggable(element, settings) {
       firstTimeDragging = false;
       var xChange =
         e.clientX - element.getBoundingClientRect().left ||
-        (e.touches && e.touches.length && e.touches[0].pageX - element.getBoundingClientRect().left);
+        (e.touches &&
+          e.touches.length &&
+          e.touches[0].pageX - element.getBoundingClientRect().left);
       var yChange =
         e.clientY - element.getBoundingClientRect().top ||
-        (e.touches && e.touches.length && e.touches[0].pageY - element.getBoundingClientRect().top);
+        (e.touches &&
+          e.touches.length &&
+          e.touches[0].pageY - element.getBoundingClientRect().top);
       element.mouseX =
         e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
       element.mouseY =
@@ -123,8 +131,10 @@ export function makeElementDraggable(element, settings) {
         e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
       element.mouseY =
         e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
-      element.style.left = Number(element.style.left.replace('px', '')) + xChange + "px";
-      element.style.top = Number(element.style.top.replace('px', '')) + yChange + "px";
+      element.style.left =
+        Number(element.style.left.replace("px", "")) + xChange + "px";
+      element.style.top =
+        Number(element.style.top.replace("px", "")) + yChange + "px";
     }
   }
 
@@ -136,8 +146,16 @@ export function makeElementDraggable(element, settings) {
       !element.disableStyleReset ||
       typeof element.disableStyleReset !== "boolean"
     ) {
-      element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
-      element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
+      element.style.setProperty(
+        "width",
+        element.getBoundingClientRect().width + "px",
+        "important"
+      );
+      element.style.setProperty(
+        "height",
+        element.getBoundingClientRect().height + "px",
+        "important"
+      );
       element.style.marginBlockStart = "initial";
       element.style.minWidth = "1ch";
       element.style.minHeight = "1em";

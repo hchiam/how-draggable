@@ -27,6 +27,8 @@
         z-index: -1;
       }
     </style>
+    <script src="makeElementDraggable.js"></script>
+    <script src="makeElementDraggableAndEditable.js"></script>
   </head>
 
   <body>
@@ -34,11 +36,7 @@
       Drag Me, or Double-Click Me For Editing!
     </p>
     <div id="snap_point">snap point</div>
-    <script type="module">
-      import {
-        makeElementDraggable,
-        makeElementDraggableAndEditable,
-      } from "./index.js";
+    <script>
       var element = document.getElementById("target");
       var snapPointElement = document.getElementById("snap_point");
       var someSettings = {
