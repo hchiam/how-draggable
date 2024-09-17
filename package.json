@@ -34,7 +34,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo; echo \"TS -> JS\"; echo; tsc; lint-staged && npm run sha-reminder; git status -sb"
+      "pre-commit": "lint-staged && npm run sha-reminder; git status -sb"
     }
   },
   "lint-staged": {
