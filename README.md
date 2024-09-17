@@ -16,8 +16,8 @@ https://cdn.jsdelivr.net/gh/hchiam/how-draggable@main/makeElementDraggableAndEdi
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.0/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.0/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.1/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.1/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -55,8 +55,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.0/makeElementDraggable.js"
-  integrity="sha384-5CnlhHGHaF/KRLZkUkko21vnsnfPxLmAg5xDPv1615mpDtS2wdVTb++m2TT5dSYA"
+  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.1/makeElementDraggable.js"
+  integrity="sha384-v19tdQ7WDVflKFj9rwM4KPz49p01l7yJTt8E5cOCY+KRelybv0ElDHZtKtVqOzmb"
   crossorigin="anonymous"
 ></script>
 ```
@@ -65,8 +65,8 @@ Or:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.0/makeElementDraggableAndEditable.js"
-  integrity="sha384-nhPq7bYHNzUzbq+lRvqb46T1x99kZ3kXCZF/tX/Pf7/92KkNaIKBIDq02Nku3Vu0"
+  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@3.6.1/makeElementDraggableAndEditable.js"
+  integrity="sha384-3MVqGxw0gc25qp2l0LM9z7VLfzX87OTdIX4cXtvvigvrRMqR3+zeP/ibYrSX5Hl7"
   crossorigin="anonymous"
 ></script>
 ```

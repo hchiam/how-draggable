@@ -4,7 +4,7 @@ import {
   SnapPoint,
 } from "./makeDraggableShared";
 
-function makeElementDraggable(
+export function makeElementDraggable(
   element: DraggableElementOrEvent,
   settings: DraggableSettings
 ): void {
