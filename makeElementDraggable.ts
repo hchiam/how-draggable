@@ -260,10 +260,7 @@ function makeElementDraggable(
     );
   }
 
-  function moveWithArrowKeys(
-    element: DraggableElementOrEvent,
-    arrowKey: string
-  ) {
+  function moveWithArrowKeys(element: HTMLElement, arrowKey: string) {
     var offsetLeft = element.offsetLeft;
     var offsetTop = element.offsetTop;
     var scrollDelta = 10;
