@@ -51,7 +51,7 @@ CDN usage:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggable.js"
-  integrity="sha384-cLeoCgeTRG5v6cfYkOMqG+F9m182FQcqHByiPFpK4FmXyjx4w4DUyvGZjao+4/1I"
+  integrity="sha384-31N6S4cA/CwKKDjmXT3V9p8owh/FFenRjhHbz5GmDY8hax+kgF4KfJFyRn1BqsGs"
   crossorigin="anonymous"
 ></script>
 ```
@@ -61,7 +61,7 @@ Or:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggableAndEditable.js"
-  integrity="sha384-OmEGIHwl9ufrVWIGy9lDt1DW4iyZ8/pe43DUOFqR6z05dEza3BD/Kxfz+w4R/jyg"
+  integrity="sha384-0Cv2Kf901dH6dcIdmWaV7tq/tm9Q48esMBUZT2Obrhus1u9hp6Gypfz3y3/I+bZh"
   crossorigin="anonymous"
 ></script>
 ```
