@@ -33,7 +33,6 @@ var settings = {
     alert("left offset " + left + " and top offset " + top);
   },
   keyboardMoveCallback: function (element) {}, // optional
-  touchEndCallback: function (element) {}, // optional
   blurCallback: function (element) {}, // optional
 };
 // now to actually use it:
