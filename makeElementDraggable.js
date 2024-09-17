@@ -1,35 +1,5 @@
-/**
-class SnapPoint {
-  x: number;
-  y: number;
-}
-
-class DraggableElementOrEvent extends HTMLElement {
-  mouseX?: number;
-  mouseY?: number;
-  disableStyleReset?: boolean;
-  snapPoints?: SnapPoint[];
-}
-
-export class DraggableSettings {
-  enableKeyboardMovement?= true;
-  disableStyleReset?= false;
-  disableEditing?= false;
-  snapPoints?: SnapPoint[];
-  snapGridSize?: number;
-  mouseDownCallback?: (element: DraggableElementOrEvent) => void;
-  touchStartCallback?: (element: DraggableElementOrEvent) => void;
-  mouseMoveCallback?: (element: DraggableElementOrEvent) => void;
-  touchMoveCallback?: (element: DraggableElementOrEvent) => void;
-  mouseUpCallback?: (element: DraggableElementOrEvent) => void;
-  touchEndCallback?: (element: DraggableElementOrEvent) => void;
-  snapCallback?: (left: number, top: number) => void;
-  keyboardMoveCallback?: (element: DraggableElementOrEvent) => void;
-  blurCallback?: (element: DraggableElementOrEvent) => void;
-}
-
-export function makeElementDraggable(element: DraggableElementOrEvent, settings: DraggableSettings) {
-*/
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function makeElementDraggable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
@@ -45,7 +15,6 @@ function makeElementDraggable(element, settings) {
   ) {
     setupKeyboardEvents(element);
   }
-
   function setupAriaLabel(element) {
     element.setAttribute(
       "aria-label",
@@ -53,7 +22,6 @@ function makeElementDraggable(element, settings) {
         element.innerText
     );
   }
-
   function setupOnMouseDown(event) {
     var e = event || window.event;
     e.preventDefault();
@@ -80,21 +48,18 @@ function makeElementDraggable(element, settings) {
       settings.touchStartCallback(element);
     }
   }
-
   function dragOnMouseMove(event) {
     drag(event);
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
     }
   }
-
   function dragOnTouchMove(event) {
     drag(event);
     if (settings && settings.touchMoveCallback) {
       settings.touchMoveCallback(element);
     }
   }
-
   var firstTimeDragging = true;
   function drag(event) {
     element.focus();
@@ -118,7 +83,6 @@ function makeElementDraggable(element, settings) {
         e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
       element.style.left = element.mouseX - xChange + "px";
       element.style.top = element.mouseY - yChange + "px";
-
       makePositionDraggable(element);
     } else {
       var xChange =
@@ -137,7 +101,6 @@ function makeElementDraggable(element, settings) {
         Number(element.style.top.replace("px", "")) + yChange + "px";
     }
   }
-
   var alreadyMadePositionDraggable = false;
   function makePositionDraggable(element) {
     if (alreadyMadePositionDraggable) return;
@@ -162,7 +125,6 @@ function makeElementDraggable(element, settings) {
       element.style.position = "fixed";
     }
   }
-
   function stopDraggingOnMouseUp() {
     document.removeEventListener("mouseup", stopDraggingOnMouseUp);
     document.removeEventListener("mousemove", dragOnMouseMove);
@@ -171,7 +133,6 @@ function makeElementDraggable(element, settings) {
       settings.mouseUpCallback(element);
     }
   }
-
   function stopDraggingOnTouchEnd() {
     document.removeEventListener("touchend", stopDraggingOnTouchEnd);
     document.removeEventListener("touchmove", dragOnTouchMove);
@@ -180,7 +141,6 @@ function makeElementDraggable(element, settings) {
       settings.touchEndCallback(element);
     }
   }
-
   var snapTimer;
   function snap(element) {
     var left = element.getBoundingClientRect().left;
@@ -189,9 +149,7 @@ function makeElementDraggable(element, settings) {
     var height = element.getBoundingClientRect().height;
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
-
     var shouldRunSnapCallback = false;
-
     if (settings && settings.snapGridSize) {
       var threshold = settings.snapGridSize;
       var newLeft = snapToGrid(middleLeft, threshold) - width / 2;
@@ -200,7 +158,6 @@ function makeElementDraggable(element, settings) {
       element.style.top = newTop + "px";
       shouldRunSnapCallback = true;
     }
-
     if (element.snapPoints && element.snapPoints.length) {
       var threshold = 50;
       clearTimeout(snapTimer);
@@ -217,18 +174,18 @@ function makeElementDraggable(element, settings) {
         }
       });
     }
-
     if (shouldRunSnapCallback && settings && settings.snapCallback) {
-      settings.snapCallback(element.style.left, element.style.top);
+      settings.snapCallback(
+        Number(element.style.left.replace("px", "")),
+        Number(element.style.top.replace("px", ""))
+      );
     }
   }
-
   function snapToGrid(value, gridSize) {
     gridSize = gridSize || 25;
     var newValue = gridSize * Math.floor(value / gridSize);
     return newValue;
   }
-
   function isSnapPointInRange(snapPoint, left, top, threshold) {
     threshold = threshold || 50;
     var a = snapPoint.x - left;
@@ -236,7 +193,6 @@ function makeElementDraggable(element, settings) {
     var c = Math.sqrt(a * a + b * b);
     return c <= threshold;
   }
-
   function setupKeyboardEvents(element) {
     element.addEventListener(
       "keyup",
@@ -248,7 +204,6 @@ function makeElementDraggable(element, settings) {
       false
     );
   }
-
   function moveWithArrowKeys(element, arrowKey) {
     var offsetLeft = element.offsetLeft;
     var offsetTop = element.offsetTop;
@@ -276,7 +231,6 @@ function makeElementDraggable(element, settings) {
       settings.keyboardMoveCallback(element);
     }
   }
-
   function getArrowKey(event) {
     var e = event || window.event;
     var key = e.key || e.code || e.keyCode || e.which;
@@ -298,7 +252,7 @@ function makeElementDraggable(element, settings) {
       case 40:
         return "ArrowDown";
       default:
-        break;
+        return "";
     }
   }
 }

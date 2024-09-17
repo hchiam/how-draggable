@@ -16,8 +16,8 @@ https://cdn.jsdelivr.net/gh/hchiam/draggable@main/makeElementDraggableAndEditabl
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -50,8 +50,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggable.js"
-  integrity="sha384-vTMs+WHhYzEzq5+GxzDINjOkGtmWdfjPFUmjE7yATi+d/VJoVBtOBC1y0oPo6H3v"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggable.js"
+  integrity="sha384-cLeoCgeTRG5v6cfYkOMqG+F9m182FQcqHByiPFpK4FmXyjx4w4DUyvGZjao+4/1I"
   crossorigin="anonymous"
 ></script>
 ```
@@ -60,21 +60,34 @@ Or:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.6/makeElementDraggableAndEditable.js"
-  integrity="sha384-VWIGLrV2DlJr2SmgOuyi4qQgpPftkwQ/U4E7Dh1cnRlAV34hJQnUD4HXjwbqBUfZ"
+  src="https://cdn.jsdelivr.net/gh/hchiam/draggable@3.5.7/makeElementDraggableAndEditable.js"
+  integrity="sha384-OmEGIHwl9ufrVWIGy9lDt1DW4iyZ8/pe43DUOFqR6z05dEza3BD/Kxfz+w4R/jyg"
   crossorigin="anonymous"
 ></script>
 ```
 
 ## Development notes
 
-```bash
+Edit the TS files! The JS files are generated from the TS files.
+
+To automatically generate the JS files and do type checking against the .d.ts files while developing from within this repo:
+
+```sh
+yarn global add typescript
+npx tsc --init # or tsc --init # creates tsconfig.json
+tsc
+```
+
+To run a demo on <http://localhost:5173/> :
+
+```sh
 yarn
 yarn demo
 ```
 
-```bash
-# get the things to put into integrity="...":
+To get the `sha384-...` values to put into `integrity="..."` of script tags:
+
+```sh
 bash get-integrity.sh;
 ```
 

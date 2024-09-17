@@ -1,6 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-function makeElementDraggableAndEditable(element, settings) {
+import {
+  DraggableElementOrEvent,
+  DraggableSettings,
+  SnapPoint,
+} from "./makeDraggableShared";
+
+function makeElementDraggableAndEditable(
+  element: DraggableElementOrEvent,
+  settings: DraggableSettings
+): void {
   element.mouseX = 0;
   element.mouseY = 0;
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;
@@ -20,20 +27,28 @@ function makeElementDraggableAndEditable(element, settings) {
   ) {
     setupKeyboardEvents(element);
   }
-  function setupAriaLabel(element) {
+
+  function setupAriaLabel(element: DraggableElementOrEvent) {
     element.setAttribute(
       "aria-label",
       "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
         element.innerText
     );
   }
-  function setupOnMouseDown(event) {
+
+  function setupOnMouseDown(event: MouseEvent | TouchEvent) {
     var e = event || window.event;
     e.preventDefault();
     element.mouseX =
-      e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+      (e as MouseEvent).clientX ||
+      ((e as TouchEvent).touches &&
+        (e as TouchEvent).touches.length &&
+        (e as TouchEvent).touches[0].pageX);
     element.mouseY =
-      e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+      (e as MouseEvent).clientY ||
+      ((e as TouchEvent).touches &&
+        (e as TouchEvent).touches.length &&
+        (e as TouchEvent).touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp, false);
     document.addEventListener("mousemove", dragOnMouseMove, { passive: false });
     element.contentEditable = "false";
@@ -42,13 +57,19 @@ function makeElementDraggableAndEditable(element, settings) {
       settings.mouseDownCallback(element);
     }
   }
-  function setupOnTouchStart(event) {
+  function setupOnTouchStart(event: MouseEvent | TouchEvent) {
     var e = event || window.event;
     e.preventDefault();
     element.mouseX =
-      e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+      (e as MouseEvent).clientX ||
+      ((e as TouchEvent).touches &&
+        (e as TouchEvent).touches.length &&
+        (e as TouchEvent).touches[0].pageX);
     element.mouseY =
-      e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+      (e as MouseEvent).clientY ||
+      ((e as TouchEvent).touches &&
+        (e as TouchEvent).touches.length &&
+        (e as TouchEvent).touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd, false);
     document.addEventListener("touchmove", dragOnTouchMove, { passive: false });
     element.contentEditable = "false";
@@ -57,62 +78,85 @@ function makeElementDraggableAndEditable(element, settings) {
       settings.touchStartCallback(element);
     }
   }
-  function dragOnMouseMove(event) {
+
+  function dragOnMouseMove(event: MouseEvent) {
     drag(event);
     element.detectAsClickToEdit = false; // disabling editing when dragging
     if (settings && settings.mouseMoveCallback) {
       settings.mouseMoveCallback(element);
     }
   }
-  function dragOnTouchMove(event) {
+
+  function dragOnTouchMove(event: TouchEvent) {
     drag(event);
     if (settings && settings.touchMoveCallback) {
       settings.touchMoveCallback(element);
     }
   }
+
   var firstTimeDragging = true;
-  function drag(event) {
+  function drag(event: MouseEvent | TouchEvent) {
     element.focus();
     var e = event || window.event;
     e.preventDefault();
     if (firstTimeDragging) {
       firstTimeDragging = false;
       var xChange =
-        e.clientX - element.getBoundingClientRect().left ||
-        (e.touches &&
-          e.touches.length &&
-          e.touches[0].pageX - element.getBoundingClientRect().left);
+        (e as MouseEvent).clientX - element.getBoundingClientRect().left ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageX -
+            element.getBoundingClientRect().left);
       var yChange =
-        e.clientY - element.getBoundingClientRect().top ||
-        (e.touches &&
-          e.touches.length &&
-          e.touches[0].pageY - element.getBoundingClientRect().top);
+        (e as MouseEvent).clientY - element.getBoundingClientRect().top ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageY -
+            element.getBoundingClientRect().top);
       element.mouseX =
-        e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+        (e as MouseEvent).clientX ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageX);
       element.mouseY =
-        e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+        (e as MouseEvent).clientY ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageY);
       element.style.left = element.mouseX - xChange + "px";
       element.style.top = element.mouseY - yChange + "px";
+
       makePositionDraggable(element);
     } else {
       var xChange =
-        e.clientX - element.mouseX ||
-        (e.touches && e.touches.length && e.touches[0].pageX - element.mouseX);
+        (e as MouseEvent).clientX - (element as any).mouseX ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageX - (element as any).mouseX);
       var yChange =
-        e.clientY - element.mouseY ||
-        (e.touches && e.touches.length && e.touches[0].pageY - element.mouseY);
+        (e as MouseEvent).clientY - (element as any).mouseY ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageY - (element as any).mouseY);
       element.mouseX =
-        e.clientX || (e.touches && e.touches.length && e.touches[0].pageX);
+        (e as MouseEvent).clientX ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageX);
       element.mouseY =
-        e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
+        (e as MouseEvent).clientY ||
+        ((e as TouchEvent).touches &&
+          (e as TouchEvent).touches.length &&
+          (e as TouchEvent).touches[0].pageY);
       element.style.left =
         Number(element.style.left.replace("px", "")) + xChange + "px";
       element.style.top =
         Number(element.style.top.replace("px", "")) + yChange + "px";
     }
   }
+
   var alreadyMadePositionDraggable = false;
-  function makePositionDraggable(element) {
+  function makePositionDraggable(element: DraggableElementOrEvent) {
     if (alreadyMadePositionDraggable) return;
     alreadyMadePositionDraggable = true;
     if (
@@ -135,6 +179,7 @@ function makeElementDraggableAndEditable(element, settings) {
       element.style.position = "fixed";
     }
   }
+
   function stopDraggingOnMouseUp() {
     document.removeEventListener("mouseup", stopDraggingOnMouseUp);
     document.removeEventListener("mousemove", dragOnMouseMove);
@@ -148,6 +193,7 @@ function makeElementDraggableAndEditable(element, settings) {
       settings.mouseUpCallback(element);
     }
   }
+
   function stopDraggingOnTouchEnd() {
     document.removeEventListener("touchend", stopDraggingOnTouchEnd);
     document.removeEventListener("touchmove", dragOnTouchMove);
@@ -161,6 +207,7 @@ function makeElementDraggableAndEditable(element, settings) {
       settings.touchEndCallback(element);
     }
   }
+
   function resetEditableOnBlur() {
     element.contentEditable = "false";
     element.addEventListener("mousedown", setupOnMouseDown, false);
@@ -172,15 +219,18 @@ function makeElementDraggableAndEditable(element, settings) {
       settings.blurCallback(element);
     }
   }
-  var snapTimer;
-  function snap(element) {
+
+  var snapTimer: NodeJS.Timeout;
+  function snap(element: DraggableElementOrEvent) {
     var left = element.getBoundingClientRect().left;
     var top = element.getBoundingClientRect().top;
     var width = element.getBoundingClientRect().width;
     var height = element.getBoundingClientRect().height;
     var middleLeft = left + width / 2;
     var middleTop = top + height / 2;
+
     var shouldRunSnapCallback = false;
+
     if (settings && settings.snapGridSize) {
       var threshold = settings.snapGridSize;
       var newLeft = snapToGrid(middleLeft, threshold) - width / 2;
@@ -189,6 +239,7 @@ function makeElementDraggableAndEditable(element, settings) {
       element.style.top = newTop + "px";
       shouldRunSnapCallback = true;
     }
+
     if (element.snapPoints && element.snapPoints.length) {
       var threshold = 50;
       clearTimeout(snapTimer);
@@ -205,6 +256,7 @@ function makeElementDraggableAndEditable(element, settings) {
         }
       });
     }
+
     if (shouldRunSnapCallback && settings && settings.snapCallback) {
       settings.snapCallback(
         Number(element.style.left.replace("px", "")),
@@ -212,32 +264,36 @@ function makeElementDraggableAndEditable(element, settings) {
       );
     }
   }
-  function snapToGrid(value, gridSize) {
+
+  function snapToGrid(value: number, gridSize: number) {
     gridSize = gridSize || 25;
     var newValue = gridSize * Math.floor(value / gridSize);
     return newValue;
   }
-  function isSnapPointInRange(snapPoint, left, top, threshold) {
+
+  function isSnapPointInRange(
+    snapPoint: SnapPoint,
+    left: number,
+    top: number,
+    threshold: number
+  ) {
     threshold = threshold || 50;
     var a = snapPoint.x - left;
     var b = snapPoint.y - top;
     var c = Math.sqrt(a * a + b * b);
     return c <= threshold;
   }
-  function setupKeyboardEvents(element) {
+
+  function setupKeyboardEvents(element: DraggableElementOrEvent) {
     element.addEventListener(
       "keyup",
-      function (event) {
-        var _a;
+      function (event: KeyboardEvent) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
         var selectionRange = null;
         try {
           selectionRange =
-            window.getSelection() &&
-            ((_a = window.getSelection()) === null || _a === void 0
-              ? void 0
-              : _a.getRangeAt(0));
+            window.getSelection() && window.getSelection()?.getRangeAt(0);
         } catch (e) {}
         var notUsingKeyboardArrowsToSelectLetters =
           !selectionRange || !selectionRange.startOffset;
@@ -272,19 +328,18 @@ function makeElementDraggableAndEditable(element, settings) {
       false
     );
   }
-  function setCaret(element) {
+
+  function setCaret(element: HTMLElement) {
     var range = document.createRange();
     range.setStart(element, 0);
     range.collapse(true);
+
     var selection = window.getSelection();
-    selection === null || selection === void 0
-      ? void 0
-      : selection.removeAllRanges();
-    selection === null || selection === void 0
-      ? void 0
-      : selection.addRange(range);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
   }
-  function moveWithArrowKeys(element, arrowKey) {
+
+  function moveWithArrowKeys(element: HTMLElement, arrowKey: string) {
     var offsetLeft = element.offsetLeft;
     var offsetTop = element.offsetTop;
     var scrollDelta = 10;
@@ -311,7 +366,8 @@ function makeElementDraggableAndEditable(element, settings) {
       settings.keyboardMoveCallback(element);
     }
   }
-  function getArrowKey(event) {
+
+  function getArrowKey(event: KeyboardEvent): string {
     var e = event || window.event;
     var key = e.key || e.code || e.keyCode || e.which;
     switch (key) {
@@ -335,12 +391,14 @@ function makeElementDraggableAndEditable(element, settings) {
         return "";
     }
   }
-  function isTabKey(event) {
+
+  function isTabKey(event: KeyboardEvent) {
     var e = event || window.event;
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Tab" || key === 9;
   }
-  function isEscKey(event) {
+
+  function isEscKey(event: KeyboardEvent) {
     var e = event || window.event;
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Escape" || key === "Esc" || key === 27;
