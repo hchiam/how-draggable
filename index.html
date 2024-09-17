@@ -1,68 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+    <style>
+      body {
+        background: #333;
+        filter: invert(1);
+        font-family: avenir, arial, tahoma;
+        display: flex;
+        align-items: center;
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo</title>
-  <style>
-    body {
-      background: #333;
-      filter: invert(1);
-      font-family: avenir, arial, tahoma;
-      display: flex;
-      align-items: center;
+        justify-content: center;
+      }
 
-      justify-content: center;
-    }
+      #target {
+        background: white;
+        top: 10px;
+      }
 
-    #target {
-      background: white;
-      top: 10px;
-    }
+      #snap_point {
+        background: cyan;
+        position: absolute;
+        top: 40vh;
+        z-index: -1;
+      }
+    </style>
+  </head>
 
-    #snap_point {
-      background: cyan;
-      position: absolute;
-      top: 40vh;
-      z-index: -1;
-    }
-  </style>
-</head>
-
-<body>
-  <p id="target" draggable="true" clickable="true" tabindex="0">
-    Drag Me, or Double-Click Me For Editing!
-  </p>
-  <div id="snap_point">snap point</div>
-  <script type="module">
-    import {
-      makeElementDraggable,
-      makeElementDraggableAndEditable
-    } from './index.js';
-    var element = document.getElementById("target");
-    var snapPointElement = document.getElementById("snap_point");
-    var someSettings = {
-      mouseMoveCallback: (element) =>
-        console.log("mousemove", element.style.left, element.style.top),
-      touchMoveCallback: (element) =>
-        console.log("touchmove", element.style.left, element.style.top),
-      snapPoints: [
-        {
-          x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
-          y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
+  <body>
+    <p id="target" draggable="true" clickable="true" tabindex="0">
+      Drag Me, or Double-Click Me For Editing!
+    </p>
+    <div id="snap_point">snap point</div>
+    <script type="module">
+      import {
+        makeElementDraggable,
+        makeElementDraggableAndEditable,
+      } from "./index.js";
+      var element = document.getElementById("target");
+      var snapPointElement = document.getElementById("snap_point");
+      var someSettings = {
+        mouseMoveCallback: (element) =>
+          console.log("mousemove", element.style.left, element.style.top),
+        touchMoveCallback: (element) =>
+          console.log("touchmove", element.style.left, element.style.top),
+        snapPoints: [
+          {
+            x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
+            y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
+          },
+        ],
+        snapCallback: (left, top) => {
+          console.log("snapped to this position:", "left", left, "top", top);
         },
-      ],
-      snapCallback: (left, top) => {
-        console.log("snapped to this position:", "left", left, "top", top);
-      },
-      // snapGridSize: 25,
-      // disableEditing: true,
-      // enableKeyboardMovement: false,
-    };
-    // makeElementDraggable(target, someSettings);
-    makeElementDraggableAndEditable(target, someSettings);
-  </script>
-</body>
-
+        // snapGridSize: 25,
+        // disableEditing: true,
+        // enableKeyboardMovement: false,
+      };
+      // makeElementDraggable(target, someSettings);
+      makeElementDraggableAndEditable(target, someSettings);
+    </script>
+  </body>
 </html>
