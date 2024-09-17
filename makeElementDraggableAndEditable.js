@@ -40,7 +40,7 @@ function makeElementDraggableAndEditable(element, settings) {
   element.startedTyping = false;
   // element.contentEditable = true;
   element.addEventListener("mousedown", setupOnMouseDown, false);
-  element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
+  element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   element.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
   if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
@@ -63,7 +63,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp, false);
-    document.addEventListener("mousemove", dragOnMouseMove, false);
+    document.addEventListener("mousemove", dragOnMouseMove, { passive: false });
     element.contentEditable = false;
     element.detectAsClickToEdit = true && !element.disableEditing; // enable editing when only clicking
     if (settings && settings.mouseDownCallback) {
@@ -78,7 +78,7 @@ function makeElementDraggableAndEditable(element, settings) {
     element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd, false);
-    document.addEventListener("touchmove", dragOnTouchMove, false);
+    document.addEventListener("touchmove", dragOnTouchMove, { passive: false });
     element.contentEditable = false;
     element.detectAsClickToEdit = true && !element.disableEditing; // enable editing when only clicking
     if (settings && settings.touchStartCallback) {
@@ -186,9 +186,7 @@ function makeElementDraggableAndEditable(element, settings) {
   function resetEditableOnBlur() {
     element.contentEditable = false;
     element.addEventListener("mousedown", setupOnMouseDown, false);
-    element.addEventListener("touchstart", setupOnTouchStart, {
-      passive: true,
-    });
+    element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
     element.startedTyping = false;
     if (settings && settings.blurCallback) {
       settings.blurCallback(element);

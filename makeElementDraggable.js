@@ -36,7 +36,7 @@ function makeElementDraggable(element, settings) {
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;
   element.snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
   element.addEventListener("mousedown", setupOnMouseDown, false);
-  element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
+  element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   setupAriaLabel(element);
   if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
     setupKeyboardEvents(element);
@@ -58,7 +58,7 @@ function makeElementDraggable(element, settings) {
     element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("mouseup", stopDraggingOnMouseUp, false);
-    document.addEventListener("mousemove", dragOnMouseMove, false);
+    document.addEventListener("mousemove", dragOnMouseMove, { passive: false });
     if (settings && settings.mouseDownCallback) {
       settings.mouseDownCallback(element);
     }
@@ -71,7 +71,7 @@ function makeElementDraggable(element, settings) {
     element.mouseY =
       e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
     document.addEventListener("touchend", stopDraggingOnTouchEnd, false);
-    document.addEventListener("touchmove", dragOnTouchMove, false);
+    document.addEventListener("touchmove", dragOnTouchMove, { passive: false });
     if (settings && settings.touchStartCallback) {
       settings.touchStartCallback(element);
     }
