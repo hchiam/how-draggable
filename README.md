@@ -8,6 +8,10 @@
 yarn add how-draggable
 ```
 
+```js
+import { makeElementDraggableAndEditable } from "how-draggable";
+```
+
 or with CDNs:
 
 ```js
