@@ -12,6 +12,7 @@ class DraggableElementOrEvent extends HTMLElement {
 }
 
 export class DraggableSettings {
+  enableKeyboardMovement?= true;
   disableStyleReset?= false;
   disableEditing?= false;
   snapPoints?: SnapPoint[];
@@ -42,7 +43,9 @@ function makeElementDraggableAndEditable(element, settings) {
   element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   element.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
-  setupKeyboardEvents(element);
+  if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
+    setupKeyboardEvents(element);
+  }
 
   function setupAriaLabel(element) {
     element.setAttribute(
@@ -118,18 +121,7 @@ function makeElementDraggableAndEditable(element, settings) {
       element.style.left = element.mouseX - xChange + "px";
       element.style.top = element.mouseY - yChange + "px";
 
-      if (
-        !element.disableStyleReset ||
-        typeof element.disableStyleReset !== "boolean"
-      ) {
-        element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
-        element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
-        element.style.marginBlockStart = "initial";
-        element.style.minWidth = "1ch";
-        element.style.minHeight = "1em";
-        element.style.position = "fixed";
-
-      }
+      makePositionDraggable(element);
     } else {
       var xChange =
         e.clientX - element.mouseX ||
@@ -143,6 +135,23 @@ function makeElementDraggableAndEditable(element, settings) {
         e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
       element.style.left = Number(element.style.left.replace('px', '')) + xChange + "px";
       element.style.top = Number(element.style.top.replace('px', '')) + yChange + "px";
+    }
+  }
+
+  var alreadyMadePositionDraggable = false;
+  function makePositionDraggable(element) {
+    if (alreadyMadePositionDraggable) return;
+    alreadyMadePositionDraggable = true;
+    if (
+      !element.disableStyleReset ||
+      typeof element.disableStyleReset !== "boolean"
+    ) {
+      element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
+      element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
+      element.style.marginBlockStart = "initial";
+      element.style.minWidth = "1ch";
+      element.style.minHeight = "1em";
+      element.style.position = "fixed";
     }
   }
 
@@ -248,10 +257,13 @@ function makeElementDraggableAndEditable(element, settings) {
       function (event) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
-        var selectionRange =
-          window.getSelection() && window.getSelection().getRangeAt(0);
+        var selectionRange = null;
+        try {
+          selectionRange =
+            window.getSelection() && window.getSelection().getRangeAt(0);
+        } catch (e) { }
         var notUsingKeyboardArrowsToSelectLetters =
-          selectionRange && !selectionRange.startOffset;
+          !selectionRange || !selectionRange.startOffset;
         if (
           arrowKey &&
           (!element.startedTyping || notUsingKeyboardArrowsToSelectLetters)
@@ -316,6 +328,7 @@ function makeElementDraggableAndEditable(element, settings) {
     }
     element.style.left = offsetLeft + "px";
     element.style.top = offsetTop + "px";
+    makePositionDraggable(element);
     if (settings && settings.keyboardMoveCallback) {
       settings.keyboardMoveCallback(element);
     }

@@ -12,6 +12,7 @@ class DraggableElementOrEvent extends HTMLElement {
 }
 
 export class DraggableSettings {
+  enableKeyboardMovement?= true;
   disableStyleReset?= false;
   disableEditing?= false;
   snapPoints?: SnapPoint[];
@@ -37,7 +38,9 @@ function makeElementDraggable(element, settings) {
   element.addEventListener("mousedown", setupOnMouseDown, false);
   element.addEventListener("touchstart", setupOnTouchStart, { passive: true });
   setupAriaLabel(element);
-  setupKeyboardEvents(element);
+  if (settings && (typeof settings.enableKeyboardMovement === 'undefined' || settings.enableKeyboardMovement)) {
+    setupKeyboardEvents(element);
+  }
 
   function setupAriaLabel(element) {
     element.setAttribute(
@@ -108,18 +111,7 @@ function makeElementDraggable(element, settings) {
       element.style.left = element.mouseX - xChange + "px";
       element.style.top = element.mouseY - yChange + "px";
 
-      if (
-        !element.disableStyleReset ||
-        typeof element.disableStyleReset !== "boolean"
-      ) {
-        element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
-        element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
-        element.style.marginBlockStart = "initial";
-        element.style.minWidth = "1ch";
-        element.style.minHeight = "1em";
-        element.style.position = "fixed";
-
-      }
+      makePositionDraggable(element);
     } else {
       var xChange =
         e.clientX - element.mouseX ||
@@ -133,6 +125,23 @@ function makeElementDraggable(element, settings) {
         e.clientY || (e.touches && e.touches.length && e.touches[0].pageY);
       element.style.left = Number(element.style.left.replace('px', '')) + xChange + "px";
       element.style.top = Number(element.style.top.replace('px', '')) + yChange + "px";
+    }
+  }
+
+  var alreadyMadePositionDraggable = false;
+  function makePositionDraggable(element) {
+    if (alreadyMadePositionDraggable) return;
+    alreadyMadePositionDraggable = true;
+    if (
+      !element.disableStyleReset ||
+      typeof element.disableStyleReset !== "boolean"
+    ) {
+      element.style.setProperty('width', element.getBoundingClientRect().width + 'px', "important");
+      element.style.setProperty('height', element.getBoundingClientRect().height + 'px', "important");
+      element.style.marginBlockStart = "initial";
+      element.style.minWidth = "1ch";
+      element.style.minHeight = "1em";
+      element.style.position = "fixed";
     }
   }
 
@@ -244,6 +253,7 @@ function makeElementDraggable(element, settings) {
     }
     element.style.left = offsetLeft + "px";
     element.style.top = offsetTop + "px";
+    makePositionDraggable(element);
     if (settings && settings.keyboardMoveCallback) {
       settings.keyboardMoveCallback(element);
     }
