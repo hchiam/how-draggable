@@ -19,6 +19,7 @@ export class DraggableSettings {
   disableEditing?: boolean; // false;
   snapPoints?: SnapPoint[];
   snapGridSize?: number;
+  snapThreshold?: number;
   mouseDownCallback?: (element: DraggableElementOrEvent) => void;
   touchStartCallback?: (element: DraggableElementOrEvent) => void;
   mouseMoveCallback?: (element: DraggableElementOrEvent) => void;

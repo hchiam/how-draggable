@@ -174,6 +174,7 @@ function makeElementDraggableAndEditable(element, settings) {
   }
   var snapTimer;
   function snap(element) {
+    var _a;
     var left = element.getBoundingClientRect().left;
     var top = element.getBoundingClientRect().top;
     var width = element.getBoundingClientRect().width;
@@ -190,7 +191,10 @@ function makeElementDraggableAndEditable(element, settings) {
       shouldRunSnapCallback = true;
     }
     if (element.snapPoints && element.snapPoints.length) {
-      var threshold = 50;
+      var threshold =
+        (_a = settings && settings.snapThreshold) !== null && _a !== void 0
+          ? _a
+          : 50;
       clearTimeout(snapTimer);
       element.snapPoints.some(function (snapPoint) {
         if (isSnapPointInRange(snapPoint, middleLeft, middleTop, threshold)) {

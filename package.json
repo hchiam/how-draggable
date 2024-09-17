@@ -1,6 +1,6 @@
 {
   "name": "how-draggable",
-  "version": "3.5.7",
+  "version": "3.6.0",
   "main": "makeElementDraggableAndEditable.js",
   "author": "hchiam",
   "description": "Make anything draggable (and editable)!",
@@ -13,8 +13,9 @@
     "url": "https://github.com/hchiam/how-draggable.git"
   },
   "scripts": {
+    "build": "tsc",
     "dev": "yarn demo",
-    "demo": "vite # index.html",
+    "demo": "yarn build; vite # index.html",
     "test": "jest --bail --findRelatedTests **/*.js",
     "lint": "prettier --write *.{js,css,html,scss,json,md,ts,tsx}",
     "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'",

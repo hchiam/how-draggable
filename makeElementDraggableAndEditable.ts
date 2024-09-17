@@ -241,7 +241,7 @@ function makeElementDraggableAndEditable(
     }
 
     if (element.snapPoints && element.snapPoints.length) {
-      var threshold = 50;
+      var threshold = (settings && settings.snapThreshold) ?? 50;
       clearTimeout(snapTimer);
       element.snapPoints.some(function (snapPoint) {
         if (isSnapPointInRange(snapPoint, middleLeft, middleTop, threshold)) {
