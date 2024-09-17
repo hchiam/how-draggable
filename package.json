@@ -34,8 +34,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run sha-reminder",
-      "post-commit": "yarn sha-reminder"
+      "pre-commit": "lint-staged && npm run sha-reminder"
     }
   },
   "lint-staged": {
