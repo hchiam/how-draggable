@@ -27,8 +27,8 @@
         z-index: -1;
       }
     </style>
-    <script src="makeElementDraggable.ts"></script>
-    <script src="makeElementDraggableAndEditable.ts"></script>
+    <script src="makeElementDraggable.js"></script>
+    <script src="makeElementDraggableAndEditable.js"></script>
   </head>
 
   <body>
@@ -54,7 +54,7 @@
         },
         // snapGridSize: 25,
         disableEditing: true,
-        // enableKeyboardMovement: false,
+        // disableKeyboardMovement: true,
       };
       // makeElementDraggable(target, someSettings);
       makeElementDraggableAndEditable(target, someSettings);
