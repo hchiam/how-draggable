@@ -36,15 +36,18 @@ export function makeElementDraggableAndEditable(
     }
     typeAnnouncement += ". ";
 
-    var ariaLabel = `${typeAnnouncement} ${
-      settings && settings.disableKeyboardMovement
+    var ariaLabel =
+      typeAnnouncement +
+      " " +
+      (settings && settings.disableKeyboardMovement
         ? ""
-        : "To enter move mode, hit escape then the arrow keys."
-    } ${
-      settings && settings.disableEditing
+        : "To enter move mode, hit escape then the arrow keys.") +
+      " " +
+      (settings && settings.disableEditing
         ? ""
-        : "To enter edit mode, hit any letter. "
-    } Text: ${element.innerText}`;
+        : "To enter edit mode, hit any letter. ") +
+      " Text: " +
+      element.innerText;
 
     element.setAttribute("aria-label", ariaLabel);
   }

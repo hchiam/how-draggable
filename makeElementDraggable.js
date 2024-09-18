@@ -13,11 +13,12 @@ function makeElementDraggable(element, settings) {
     setupKeyboardEvents(element);
   }
   function setupAriaLabel(element) {
-    var ariaLabel = `${
-      settings && settings.disableKeyboardMovement
+    var ariaLabel =
+      (settings && settings.disableKeyboardMovement
         ? ""
-        : "Draggable. To enter move mode, hit escape then the arrow keys. "
-    }Text: ${element.innerText}`;
+        : "Draggable. To enter move mode, hit escape then the arrow keys. ") +
+      "Text: " +
+      element.innerText;
     element.setAttribute("aria-label", ariaLabel);
   }
   function setupOnMouseDown(event) {
