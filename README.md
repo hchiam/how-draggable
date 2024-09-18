@@ -49,6 +49,9 @@ var settings = {
   },
   keyboardMoveCallback: function (element) {}, // optional
   blurCallback: function (element) {}, // optional
+  customAriaLabel: function (element, settings) {
+    return `custom aria-label: ${element.innerText}`;
+  }, // optional
 };
 // now to actually use it:
 makeElementDraggableAndEditable(element, settings);

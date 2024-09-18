@@ -16,30 +16,35 @@ function makeElementDraggableAndEditable(element, settings) {
   setupAriaLabel(element);
   setupKeyboardEvents(element);
   function setupAriaLabel(element) {
-    var typeAnnouncement = "";
-    if (settings) {
-      if (!settings.disableKeyboardMovement) {
-        typeAnnouncement += "Draggable";
-        if (!settings.disableEditing) {
-          typeAnnouncement += " and editable";
+    var ariaLabel = "";
+    if (settings && settings.customAriaLabel) {
+      ariaLabel = settings.customAriaLabel(element, settings);
+    } else {
+      var typeAnnouncement = "";
+      if (settings) {
+        if (!settings.disableKeyboardMovement) {
+          typeAnnouncement += "Draggable";
+          if (!settings.disableEditing) {
+            typeAnnouncement += " and editable";
+          }
+        } else if (!settings.disableEditing) {
+          typeAnnouncement += "Editable";
         }
-      } else if (!settings.disableEditing) {
-        typeAnnouncement += "Editable";
       }
+      typeAnnouncement += ". ";
+      ariaLabel =
+        typeAnnouncement +
+        " " +
+        (settings && settings.disableKeyboardMovement
+          ? ""
+          : "To enter move mode, hit escape then the arrow keys.") +
+        " " +
+        (settings && settings.disableEditing
+          ? ""
+          : "To enter edit mode, hit any letter. ") +
+        " Text: " +
+        element.innerText;
     }
-    typeAnnouncement += ". ";
-    var ariaLabel =
-      typeAnnouncement +
-      " " +
-      (settings && settings.disableKeyboardMovement
-        ? ""
-        : "To enter move mode, hit escape then the arrow keys.") +
-      " " +
-      (settings && settings.disableEditing
-        ? ""
-        : "To enter edit mode, hit any letter. ") +
-      " Text: " +
-      element.innerText;
     element.setAttribute("aria-label", ariaLabel);
   }
   function setupOnMouseDown(event) {
