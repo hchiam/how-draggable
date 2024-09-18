@@ -34,4 +34,8 @@ export class DraggableSettings {
   ) => void;
   keyboardMoveCallback?: (element: DraggableElementOrEvent) => void;
   blurCallback?: (element: DraggableElementOrEvent) => void;
+  customAriaLabel?: (
+    element: DraggableElementOrEvent,
+    settings: DraggableSettings
+  ) => string;
 }

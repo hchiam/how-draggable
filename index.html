@@ -52,8 +52,13 @@
         snapCallback: (left, top) => {
           console.log("snapped to this position:", "left", left, "top", top);
         },
+        customAriaLabel: (element, settings) => {
+          return `Custom aria-label: ${
+            element.innerText
+          }. Settings: editing ${!settings?.disableEditing}, keyboard movement ${!settings?.disableKeyboardMovement}`;
+        },
         // snapGridSize: 25,
-        disableEditing: true,
+        // disableEditing: true,
         // disableKeyboardMovement: true,
       };
       // makeElementDraggable(target, someSettings);

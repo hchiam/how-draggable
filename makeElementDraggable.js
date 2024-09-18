@@ -13,11 +13,18 @@ function makeElementDraggable(element, settings) {
     setupKeyboardEvents(element);
   }
   function setupAriaLabel(element) {
-    element.setAttribute(
-      "aria-label",
-      "Draggable. To drag this element around, hit the arrow keys. Text: " +
-        element.innerText
-    );
+    var ariaLabel = "";
+    if (settings && settings.customAriaLabel) {
+      ariaLabel = settings.customAriaLabel(element, settings);
+    } else {
+      ariaLabel =
+        (settings && settings.disableKeyboardMovement
+          ? ""
+          : "Draggable. To enter move mode, hit escape then the arrow keys. ") +
+        "Text: " +
+        element.innerText;
+    }
+    element.setAttribute("aria-label", ariaLabel);
   }
   function setupOnMouseDown(event) {
     var e = event || window.event;

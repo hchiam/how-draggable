@@ -20,16 +20,41 @@ export function makeElementDraggableAndEditable(
   element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   element.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
-  if (!settings || !settings.disableKeyboardMovement) {
-    setupKeyboardEvents(element);
-  }
+  setupKeyboardEvents(element);
 
   function setupAriaLabel(element: DraggableElementOrEvent) {
-    element.setAttribute(
-      "aria-label",
-      "Draggable and editable. To enter drag mode, hit Escape and then hit the arrow keys. To enter edit mode, hit any letter. Text: " +
-        element.innerText
-    );
+    var ariaLabel = "";
+    if (settings && settings.customAriaLabel) {
+      ariaLabel = settings.customAriaLabel(element, settings);
+    } else {
+      var typeAnnouncement = "";
+      if (settings) {
+        if (!settings.disableKeyboardMovement) {
+          typeAnnouncement += "Draggable";
+          if (!settings.disableEditing) {
+            typeAnnouncement += " and editable";
+          }
+        } else if (!settings.disableEditing) {
+          typeAnnouncement += "Editable";
+        }
+      }
+      typeAnnouncement += ". ";
+
+      ariaLabel =
+        typeAnnouncement +
+        " " +
+        (settings && settings.disableKeyboardMovement
+          ? ""
+          : "To enter move mode, hit escape then the arrow keys.") +
+        " " +
+        (settings && settings.disableEditing
+          ? ""
+          : "To enter edit mode, hit any letter. ") +
+        " Text: " +
+        element.innerText;
+    }
+
+    element.setAttribute("aria-label", ariaLabel);
   }
 
   function setupOnMouseDown(event: MouseEvent | TouchEvent) {
@@ -324,6 +349,7 @@ export function makeElementDraggableAndEditable(
         var notUsingKeyboardArrowsToSelectLetters =
           !selectionRange || !selectionRange.startOffset;
         if (
+          (!settings || !settings.disableKeyboardMovement) &&
           arrowKey &&
           (!element.startedTyping || notUsingKeyboardArrowsToSelectLetters)
         ) {
@@ -336,7 +362,10 @@ export function makeElementDraggableAndEditable(
           element.contentEditable = "false";
           element.blur();
           element.focus();
-        } else if (!isTabKey(event)) {
+        } else if (
+          (!settings || !settings.disableEditing) &&
+          !isTabKey(event)
+        ) {
           // if typing inside:
           var didNotSelectAnyText =
             selectionRange &&
@@ -348,6 +377,7 @@ export function makeElementDraggableAndEditable(
           element.startedTyping = true;
           element.detectAsClickToEdit = true;
           element.contentEditable = "true";
+          setupAriaLabel(element); // update
           element.focus();
         }
       },
