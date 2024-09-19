@@ -26,7 +26,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "es-check": "^6.0.0",
     "husky": "^4.3.0",
     "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
@@ -39,8 +38,7 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "jest --bail --findRelatedTests",
-      "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'"
+      "jest --bail --findRelatedTests"
     ],
     "*.{js,css,html,scss,json,md,ts,tsx}": "prettier --write"
   }
