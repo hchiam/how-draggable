@@ -6,6 +6,7 @@
 
 ```sh
 yarn add how-draggable
+# npm i how-draggable
 ```
 
 ```js
@@ -86,6 +87,7 @@ To automatically generate the JS files and do type checking against the .d.ts fi
 
 ```sh
 yarn global add typescript
+# npm install --global typescript
 npx tsc --init # or tsc --init # creates tsconfig.json
 tsc
 ```
@@ -95,6 +97,7 @@ To run a demo on <http://localhost:5173/> :
 ```sh
 yarn
 yarn demo
+# npm install; npm run build; vite;
 ```
 
 To get the `sha384-...` values to put into `integrity="..."` of script tags:
