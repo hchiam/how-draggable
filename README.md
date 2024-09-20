@@ -2,7 +2,7 @@
 
 ## Make anything draggable. And editable. [![version](https://img.shields.io/npm/v/how-draggable.svg?style=flat-square&color=423a73)](https://www.npmjs.com/package/how-draggable) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hchiam/how-draggable/blob/main/LICENSE)
 
-[Live demo](https://codepen.io/hchiam/full/pobxgBo) (mouse, touch, keyboard, or screen reader!)
+[Live demo](https://codepen.io/hchiam/full/pobxgBo) (works with mouse, touch, keyboard, or screen reader!)
 
 ```sh
 yarn add how-draggable
