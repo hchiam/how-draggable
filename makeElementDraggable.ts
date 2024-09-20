@@ -288,7 +288,7 @@ export function makeElementDraggable(
 
   function setupKeyboardEvents(element: DraggableElementOrEvent) {
     element.addEventListener(
-      "keyup",
+      "keydown",
       function (event: KeyboardEvent) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);

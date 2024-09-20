@@ -336,11 +336,40 @@ export function makeElementDraggableAndEditable(
   }
 
   function setupKeyboardEvents(element: DraggableElementOrEvent) {
+    var heldArrowKey = false;
+    var heldArrowKeyTimeout: NodeJS.Timeout;
+    if (!settings || !settings.disableKeyboardMovement) {
+      element.addEventListener(
+        "keydown",
+        function (event: KeyboardEvent) {
+          if (!heldArrowKey && !element.detectAsClickToEdit) {
+            var arrowKey = getArrowKey(event);
+            if (arrowKey) {
+              event.preventDefault();
+              heldArrowKey = true;
+              heldArrowKeyTimeout = setTimeout(function () {
+                var intervalTimeout = setInterval(() => {
+                  if (heldArrowKey) {
+                    moveWithArrowKeys(element, arrowKey);
+                  } else {
+                    // stop
+                    clearInterval(intervalTimeout);
+                  }
+                }, 100);
+              }, 1000);
+            }
+          }
+        },
+        false
+      );
+    }
     element.addEventListener(
       "keyup",
       function (event: KeyboardEvent) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
+        heldArrowKey = false;
+        clearTimeout(heldArrowKeyTimeout);
         var selectionRange = null;
         try {
           selectionRange =

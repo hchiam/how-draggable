@@ -232,7 +232,7 @@ function makeElementDraggable(element, settings) {
   }
   function setupKeyboardEvents(element) {
     element.addEventListener(
-      "keyup",
+      "keydown",
       function (event) {
         event.preventDefault();
         var arrowKey = getArrowKey(event);
