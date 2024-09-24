@@ -6,8 +6,12 @@ function makeElementDraggable(element, settings) {
   element.mouseY = 0;
   element.disableStyleReset = (settings && settings.disableStyleReset) || false;
   element.snapPoints = (settings && settings.snapPoints) || []; // [ {x,y}, ... ]
-  element.addEventListener("mousedown", setupOnMouseDown, false);
-  element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
+  var handle =
+    settings && settings.handleSelector
+      ? element.querySelector(settings.handleSelector)
+      : element;
+  handle.addEventListener("mousedown", setupOnMouseDown, false);
+  handle.addEventListener("touchstart", setupOnTouchStart, { passive: false });
   setupAriaLabel(element);
   if (!settings || !settings.disableKeyboardMovement) {
     setupKeyboardEvents(element);
@@ -159,6 +163,7 @@ function makeElementDraggable(element, settings) {
     var snapWithinContainer = undefined;
     if (settings && settings.snapWithinElements) {
       settings.snapWithinElements.some(function (container) {
+        // @ts-ignore TS2339
         if (container.checkVisibility()) {
           var containerRect = container.getBoundingClientRect();
           var containerStyles = getComputedStyle(container);
@@ -231,7 +236,7 @@ function makeElementDraggable(element, settings) {
     return c <= threshold;
   }
   function setupKeyboardEvents(element) {
-    element.addEventListener(
+    handle.addEventListener(
       "keydown",
       function (event) {
         event.preventDefault();

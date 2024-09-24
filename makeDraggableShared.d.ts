@@ -21,6 +21,7 @@ export class DraggableSettings {
   snapGridSize?: number;
   snapThreshold?: number;
   snapWithinElements?: HTMLElement[];
+  handleSelector?: string;
   mouseDownCallback?: (element: DraggableElementOrEvent) => void;
   touchStartCallback?: (element: DraggableElementOrEvent) => void;
   mouseMoveCallback?: (element: DraggableElementOrEvent) => void;
