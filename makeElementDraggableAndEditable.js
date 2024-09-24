@@ -10,9 +10,13 @@ function makeElementDraggableAndEditable(element, settings) {
   element.detectAsClickToEdit = false;
   element.startedTyping = false;
   // element.contentEditable = true;
-  element.addEventListener("mousedown", setupOnMouseDown, false);
-  element.addEventListener("touchstart", setupOnTouchStart, { passive: false });
-  element.addEventListener("blur", resetEditableOnBlur, false);
+  var handle =
+    settings && settings.handleSelector
+      ? element.querySelector(settings.handleSelector)
+      : element;
+  handle.addEventListener("mousedown", setupOnMouseDown, false);
+  handle.addEventListener("touchstart", setupOnTouchStart, { passive: false });
+  handle.addEventListener("blur", resetEditableOnBlur, false);
   setupAriaLabel(element);
   setupKeyboardEvents(element);
   function setupAriaLabel(element) {
@@ -161,7 +165,7 @@ function makeElementDraggableAndEditable(element, settings) {
     if (element.detectAsClickToEdit) {
       element.contentEditable = "true"; // disabling editing when stopped dragging
       element.focus();
-      element.removeEventListener("mousedown", setupOnMouseDown);
+      handle.removeEventListener("mousedown", setupOnMouseDown);
     }
     snap(element);
     if (settings && settings.mouseUpCallback) {
@@ -174,7 +178,7 @@ function makeElementDraggableAndEditable(element, settings) {
     if (element.detectAsClickToEdit) {
       element.contentEditable = "true"; // disabling editing when stopped dragging
       element.focus();
-      element.removeEventListener("touchstart", setupOnTouchStart);
+      handle.removeEventListener("touchstart", setupOnTouchStart);
     }
     snap(element);
     if (settings && settings.touchEndCallback) {
@@ -183,8 +187,8 @@ function makeElementDraggableAndEditable(element, settings) {
   }
   function resetEditableOnBlur() {
     element.contentEditable = "false";
-    element.addEventListener("mousedown", setupOnMouseDown, false);
-    element.addEventListener("touchstart", setupOnTouchStart, {
+    handle.addEventListener("mousedown", setupOnMouseDown, false);
+    handle.addEventListener("touchstart", setupOnTouchStart, {
       passive: false,
     });
     element.startedTyping = false;
@@ -206,6 +210,7 @@ function makeElementDraggableAndEditable(element, settings) {
     var snapWithinContainer = undefined;
     if (settings && settings.snapWithinElements) {
       settings.snapWithinElements.some(function (container) {
+        // @ts-ignore TS2339
         if (container.checkVisibility()) {
           var containerRect = container.getBoundingClientRect();
           var containerStyles = getComputedStyle(container);
@@ -281,7 +286,7 @@ function makeElementDraggableAndEditable(element, settings) {
     var heldArrowKey = false;
     var heldArrowKeyTimeout;
     if (!settings || !settings.disableKeyboardMovement) {
-      element.addEventListener(
+      handle.addEventListener(
         "keydown",
         function (event) {
           if (!heldArrowKey && !element.detectAsClickToEdit) {
@@ -305,7 +310,7 @@ function makeElementDraggableAndEditable(element, settings) {
         false
       );
     }
-    element.addEventListener(
+    handle.addEventListener(
       "keyup",
       function (event) {
         var _a;

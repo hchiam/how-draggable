@@ -32,7 +32,9 @@
   </head>
 
   <body>
-    <p id="target" draggable="true" clickable="true" tabindex="0">Drag Me!</p>
+    <p id="target" draggable="true" clickable="true" tabindex="0">
+      Drag Me! <span id="handle">handle</span>
+    </p>
     <div id="snap_point">snap point <br />container <br />with height</div>
     <script>
       var element = document.getElementById("target");
@@ -58,8 +60,9 @@
           }. Settings: editing ${!settings?.disableEditing}, keyboard movement ${!settings?.disableKeyboardMovement}`;
         },
         // snapGridSize: 25,
-        // disableEditing: true,
+        disableEditing: true,
         // disableKeyboardMovement: true,
+        handleSelector: "#handle",
       };
       // makeElementDraggable(target, someSettings);
       makeElementDraggableAndEditable(target, someSettings);
