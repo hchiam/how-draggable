@@ -25,7 +25,12 @@ function makeElementDraggableAndEditable(element, settings) {
       ariaLabel = settings.customAriaLabel(element, settings);
     } else {
       var typeAnnouncement = "";
-      if (settings) {
+      if (
+        !(settings === null || settings === void 0
+          ? void 0
+          : settings.disableKeyboardMovement) ||
+        !settings.disableEditing
+      ) {
         if (!settings.disableKeyboardMovement) {
           typeAnnouncement += "Draggable";
           if (!settings.disableEditing) {
@@ -34,8 +39,8 @@ function makeElementDraggableAndEditable(element, settings) {
         } else if (!settings.disableEditing) {
           typeAnnouncement += "Editable";
         }
+        typeAnnouncement += ". ";
       }
-      typeAnnouncement += ". ";
       ariaLabel = typeAnnouncement;
       if (
         !(settings === null || settings === void 0

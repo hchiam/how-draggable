@@ -34,7 +34,7 @@ export function makeElementDraggableAndEditable(
       ariaLabel = settings.customAriaLabel(element, settings);
     } else {
       var typeAnnouncement = "";
-      if (settings) {
+      if (!settings?.disableKeyboardMovement || !settings.disableEditing) {
         if (!settings.disableKeyboardMovement) {
           typeAnnouncement += "Draggable";
           if (!settings.disableEditing) {
@@ -43,8 +43,8 @@ export function makeElementDraggableAndEditable(
         } else if (!settings.disableEditing) {
           typeAnnouncement += "Editable";
         }
+        typeAnnouncement += ". ";
       }
-      typeAnnouncement += ". ";
 
       ariaLabel = typeAnnouncement;
 
