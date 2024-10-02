@@ -36,18 +36,30 @@ function makeElementDraggableAndEditable(element, settings) {
         }
       }
       typeAnnouncement += ". ";
-      ariaLabel =
-        typeAnnouncement +
-        " " +
-        (settings && settings.disableKeyboardMovement
-          ? ""
-          : "To enter move mode, hit escape then the arrow keys.") +
-        " " +
-        (settings && settings.disableEditing
-          ? ""
-          : "To enter edit mode, hit any letter. ") +
-        " Text: " +
-        element.innerText;
+      ariaLabel = typeAnnouncement;
+      if (
+        !(settings === null || settings === void 0
+          ? void 0
+          : settings.disableKeyboardMovement)
+      ) {
+        if (usingTouchScreen()) {
+          ariaLabel += "To exit edit mode, tap elsewhere. ";
+        } else {
+          ariaLabel += "To enter move mode, hit escape then the arrow keys. ";
+        }
+      }
+      if (
+        !(settings === null || settings === void 0
+          ? void 0
+          : settings.disableEditing)
+      ) {
+        if (usingTouchScreen()) {
+          ariaLabel += "To enter edit mode, tap twice. ";
+        } else {
+          ariaLabel += "To enter edit mode, hit any letter. ";
+        }
+      }
+      ariaLabel += "Text: " + element.innerText;
     }
     element.setAttribute("aria-label", ariaLabel);
   }
@@ -436,6 +448,16 @@ function makeElementDraggableAndEditable(element, settings) {
     var e = event || window.event;
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Escape" || key === "Esc" || key === 27;
+  }
+  function usingTouchScreen() {
+    var _a, _b;
+    return (_b =
+      (_a = window.matchMedia) === null || _a === void 0
+        ? void 0
+        : _a.call(window, "(hover: none) and (pointer: coarse)")) === null ||
+      _b === void 0
+      ? void 0
+      : _b.matches;
   }
 }
 exports.makeElementDraggableAndEditable = makeElementDraggableAndEditable;

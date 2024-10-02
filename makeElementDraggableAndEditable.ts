@@ -46,18 +46,23 @@ export function makeElementDraggableAndEditable(
       }
       typeAnnouncement += ". ";
 
-      ariaLabel =
-        typeAnnouncement +
-        " " +
-        (settings && settings.disableKeyboardMovement
-          ? ""
-          : "To enter move mode, hit escape then the arrow keys.") +
-        " " +
-        (settings && settings.disableEditing
-          ? ""
-          : "To enter edit mode, hit any letter. ") +
-        " Text: " +
-        element.innerText;
+      ariaLabel = typeAnnouncement;
+
+      if (!settings?.disableKeyboardMovement) {
+        if (usingTouchScreen()) {
+          ariaLabel += "To exit edit mode, tap elsewhere. ";
+        } else {
+          ariaLabel += "To enter move mode, hit escape then the arrow keys. ";
+        }
+      }
+      if (!settings?.disableEditing) {
+        if (usingTouchScreen()) {
+          ariaLabel += "To enter edit mode, tap twice. ";
+        } else {
+          ariaLabel += "To enter edit mode, hit any letter. ";
+        }
+      }
+      ariaLabel += "Text: " + element.innerText;
     }
 
     element.setAttribute("aria-label", ariaLabel);
@@ -494,5 +499,8 @@ export function makeElementDraggableAndEditable(
     var e = event || (window.event as KeyboardEvent);
     var key = e.key || e.code || e.keyCode || e.which;
     return key === "Escape" || key === "Esc" || key === 27;
+  }
+  function usingTouchScreen() {
+    return window.matchMedia?.("(hover: none) and (pointer: coarse)")?.matches;
   }
 }

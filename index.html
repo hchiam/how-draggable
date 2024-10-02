@@ -18,6 +18,7 @@
       #target {
         background: white;
         top: 10px;
+        padding: 2rem;
       }
 
       #snap_point {
@@ -33,7 +34,8 @@
 
   <body>
     <p id="target" draggable="true" clickable="true" tabindex="0">
-      Drag Me! <span id="handle">handle</span>
+      Drag Me!
+      <!-- <span id="handle">handle</span> -->
     </p>
     <div id="snap_point">snap point <br />container <br />with height</div>
     <script>
@@ -54,15 +56,15 @@
         snapCallback: (left, top) => {
           console.log("snapped to this position:", "left", left, "top", top);
         },
-        customAriaLabel: (element, settings) => {
-          return `Custom aria-label: ${
-            element.innerText
-          }. Settings: editing ${!settings?.disableEditing}, keyboard movement ${!settings?.disableKeyboardMovement}`;
-        },
+        // customAriaLabel: (element, settings) => {
+        //   return `Custom aria-label: ${
+        //     element.innerText
+        //   }. Settings: editing ${!settings?.disableEditing}, keyboard movement ${!settings?.disableKeyboardMovement}`;
+        // },
         // snapGridSize: 25,
-        disableEditing: true,
+        // disableEditing: true,
         // disableKeyboardMovement: true,
-        handleSelector: "#handle",
+        // handleSelector: "#handle",
       };
       // makeElementDraggable(target, someSettings);
       makeElementDraggableAndEditable(target, someSettings);
