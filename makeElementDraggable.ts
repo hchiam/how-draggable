@@ -30,12 +30,13 @@ export function makeElementDraggable(
     if (settings && settings.customAriaLabel) {
       ariaLabel = settings.customAriaLabel(element, settings);
     } else {
-      ariaLabel =
-        (settings && settings.disableKeyboardMovement
-          ? ""
-          : "Draggable. To enter move mode, hit escape then the arrow keys. ") +
-        "Text: " +
-        element.innerText;
+      if (settings && !settings.disableKeyboardMovement) {
+        ariaLabel += "Draggable. ";
+        if (!usingTouchScreen()) {
+          ariaLabel += "To enter move mode, hit escape then the arrow keys. ";
+        }
+      }
+      ariaLabel += "Text: " + element.innerText;
     }
 
     element.setAttribute("aria-label", ariaLabel);
@@ -356,5 +357,8 @@ export function makeElementDraggable(
       default:
         return "";
     }
+  }
+  function usingTouchScreen() {
+    return window.matchMedia?.("(hover: none) and (pointer: coarse)")?.matches;
   }
 }

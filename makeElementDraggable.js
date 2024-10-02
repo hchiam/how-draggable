@@ -21,12 +21,13 @@ function makeElementDraggable(element, settings) {
     if (settings && settings.customAriaLabel) {
       ariaLabel = settings.customAriaLabel(element, settings);
     } else {
-      ariaLabel =
-        (settings && settings.disableKeyboardMovement
-          ? ""
-          : "Draggable. To enter move mode, hit escape then the arrow keys. ") +
-        "Text: " +
-        element.innerText;
+      if (settings && !settings.disableKeyboardMovement) {
+        ariaLabel += "Draggable. ";
+        if (!usingTouchScreen()) {
+          ariaLabel += "To enter move mode, hit escape then the arrow keys. ";
+        }
+      }
+      ariaLabel += "Text: " + element.innerText;
     }
     element.setAttribute("aria-label", ariaLabel);
   }
@@ -296,6 +297,16 @@ function makeElementDraggable(element, settings) {
       default:
         return "";
     }
+  }
+  function usingTouchScreen() {
+    var _a, _b;
+    return (_b =
+      (_a = window.matchMedia) === null || _a === void 0
+        ? void 0
+        : _a.call(window, "(hover: none) and (pointer: coarse)")) === null ||
+      _b === void 0
+      ? void 0
+      : _b.matches;
   }
 }
 exports.makeElementDraggable = makeElementDraggable;
