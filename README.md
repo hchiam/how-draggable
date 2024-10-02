@@ -75,7 +75,7 @@ Or:
 ```html
 <script
   src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.1/makeElementDraggableAndEditable.js"
-  integrity="sha384-Lw14fSOoe9GGKvWj5X+yBydRL2Kf2lTEWxE5h9HuHZr7OcnTnMW8OREdQFd3QufW"
+  integrity="sha384-JML9nrfkku4c6Q+12Hno2+sm+DbIxby+PRjfrXnLQ5HEp7p+oXnACk4YYDvWqQqV"
   crossorigin="anonymous"
 ></script>
 ```
