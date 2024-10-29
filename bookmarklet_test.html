@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+    <style>
+      body {
+        background: #333;
+
+        font-family: avenir, arial, tahoma;
+        display: flex;
+        align-items: center;
+
+        justify-content: center;
+      }
+
+      #target {
+        background: white;
+        top: 10px;
+        /* padding: 2rem; */
+      }
+
+      #snap_point_2 {
+        background: lime;
+        position: absolute;
+        top: 40vh;
+        z-index: -1;
+      }
+      #snap_point {
+        background: red;
+        color:white;
+        position: absolute;
+        top: 30vh;
+        z-index: -1;
+      }
+    </style>
+    <script src="makeElementDraggable.js"></script>
+    <script src="makeElementDraggableAndEditable.js"></script>
+  </head>
+
+  <body>
+    <p id="target" draggable="true" clickable="true" tabindex="0">
+      drag
+    </p>
+    <div id="snap_point">not here</div>
+    <div id="snap_point_2">snap here</div>
+    <script>
+      var element = document.getElementById("target");
+      var snapPointElement = document.getElementById("snap_point");
+      var someSettings = {
+        mouseMoveCallback: (element) =>
+          console.log("mousemove", element.style.left, element.style.top),
+        touchMoveCallback: (element) =>
+          console.log("touchmove", element.style.left, element.style.top),
+        snapWithinElements: [snapPointElement],
+        // snapThreshold: 1000,
+        snapPoints: [
+          {
+            x: snapPointElement.offsetLeft + snapPointElement.offsetWidth / 2,
+            y: snapPointElement.offsetTop + snapPointElement.offsetHeight / 2,
+          },
+        ],
+        snapCallback: (left, top) => {
+          console.log(`snapped to this position: (${left}, ${top})`);
+        },
+        // customAriaLabel: (element, settings) => {
+        //   return `Custom aria-label: ${
+        //     element.innerText
+        //   }. Settings: editing ${!settings?.disableEditing}, keyboard movement ${!settings?.disableKeyboardMovement}`;
+        // },
+        // snapGridSize: 25,
+        // disableEditing: true,
+        // disableKeyboardMovement: true,
+        // handleSelector: "#handle",
+      };
+      makeElementDraggable(target, someSettings);
+      // makeElementDraggableAndEditable(target, someSettings);
+    </script>
+  </body>
+</html>
