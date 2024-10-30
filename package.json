@@ -16,7 +16,7 @@
     "build": "tsc; yarn lint; yarn pkg",
     "dev": "yarn demo",
     "demo": "yarn build; vite # index.html",
-    "bookmarklet_test": "yarn build; vite serve bookmarklet_test",
+    "bookmarklet_test": "open http://localhost:5173/bookmarklet_test.html; yarn dev",
     "test": "jest --bail --findRelatedTests **/*.js",
     "lint": "prettier --write *.{js,css,html,scss,json,md,ts,tsx}",
     "es-check": "es-check es5 'makeElementDraggableAndEditable.js' 'makeElementDraggable.js'",
