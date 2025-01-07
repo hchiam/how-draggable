@@ -80,6 +80,8 @@ Or:
 ></script>
 ```
 
+Automated types check: https://arethetypeswrong.github.io/?p=how-draggable
+
 ## Development notes
 
 Edit the TS files! The JS files are generated from the TS files.
