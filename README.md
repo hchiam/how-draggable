@@ -21,8 +21,8 @@ https://cdn.jsdelivr.net/gh/hchiam/how-draggable@main/makeElementDraggableAndEdi
 ```
 
 ```js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.1/makeElementDraggable.js
-https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.1/makeElementDraggableAndEditable.js
+https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.2/makeElementDraggable.js
+https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.2/makeElementDraggableAndEditable.js
 ```
 
 Example usage:
@@ -64,8 +64,8 @@ CDN usage:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.1/makeElementDraggable.js"
-  integrity="sha384-vVhZCoOnPVPgQJhedP9exv9z8eDjgLXj1jSMMRHiwLEfbpH5LF5e0vkqs92VIYn4"
+  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.2/makeElementDraggable.js"
+  integrity="sha384-Pq1FiqRmmEtEQ9LcGqq64SA9hN9dREMM+O+3EM4oZS/q/5eHU5vvjwgKuhPBepcr"
   crossorigin="anonymous"
 ></script>
 ```
@@ -74,13 +74,13 @@ Or:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.1/makeElementDraggableAndEditable.js"
-  integrity="sha384-JML9nrfkku4c6Q+12Hno2+sm+DbIxby+PRjfrXnLQ5HEp7p+oXnACk4YYDvWqQqV"
+  src="https://cdn.jsdelivr.net/gh/hchiam/how-draggable@4.1.2/makeElementDraggableAndEditable.js"
+  integrity="sha384-LicD1lkFGZXmcC8EN5Pb7uW6eXW1paU4Yu1hcf7xYXFGLNtYYOHgn9pKRWSF2uRz"
   crossorigin="anonymous"
 ></script>
 ```
 
-Automated types check: https://arethetypeswrong.github.io/?p=how-draggable
+Automated types check: <https://arethetypeswrong.github.io/?p=how-draggable>
 
 ## Development notes
 
