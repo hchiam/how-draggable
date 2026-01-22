@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.makeElementDraggable = void 0;
+exports.makeElementDraggable = makeElementDraggable;
 function makeElementDraggable(element, settings) {
   element.mouseX = 0;
   element.mouseY = 0;
@@ -309,4 +309,3 @@ function makeElementDraggable(element, settings) {
       : _b.matches;
   }
 }
-exports.makeElementDraggable = makeElementDraggable;

@@ -27,6 +27,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/node": "^25.0.10",
     "husky": "^4.3.0",
     "jest": "^27.0.4",
     "lint-staged": "^11.0.0",
